@@ -1,6 +1,6 @@
 const canvas = document.getElementById("gl-display") as HTMLCanvasElement;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight - document.getElementsByClassName("header")[0].clientHeight
+canvas.width = document.body.clientWidth;
+canvas.height = window.innerHeight * 0.95 - document.getElementsByClassName("header")[0].scrollHeight;
 const gl = canvas.getContext("webgl2") as WebGL2RenderingContext;
 if (!gl) {
   alert("Your browser does not support WebGL");
