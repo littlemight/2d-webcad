@@ -4,6 +4,8 @@ class Application {
   canvas: HTMLCanvasElement;
   gl: WebGL2RenderingContext;
   shapeList: Shape[];
+  selectedShape?: Shape;
+
   constructor(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
     this.canvas = canvas;
     this.gl = gl;
@@ -16,7 +18,11 @@ class Application {
     this.gl.clearColor(1, 1, 1, 1);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
+    this.selectedShape?.render(true);
     for (const shape of this.shapeList) {
+      if (shape.id === this.selectedShape?.id) {
+        continue;
+      }
       shape.render();
     }
   }

@@ -1,18 +1,24 @@
+let _id = 0;
+
 abstract class Shape {
   program: WebGLProgram;
   canvas: HTMLCanvasElement;
   gl: WebGL2RenderingContext;
   color: Color;
+  selectedColor: Color;
   points: Point[];
+  id: number = _id++;
   constructor(
     canvas: HTMLCanvasElement,
     gl: WebGL2RenderingContext,
-    color: Color
+    color: Color,
+    selectedColor: Color
   ) {
     this.canvas = canvas;
     this.gl = gl;
     this.program = this.createShaderProgram();
     this.color = color;
+    this.selectedColor = selectedColor;
     this.points = [];
   }
 
@@ -61,7 +67,14 @@ abstract class Shape {
     return shader;
   }
 
-  abstract render(): void;
+  abstract renderSelected(): void;
+  abstract renderShape(): void;
+  render(selected: boolean) {
+    this.renderShape();
+    if (selected) {
+      this.renderSelected();
+    }
+  }
 }
 
 export default Shape;
