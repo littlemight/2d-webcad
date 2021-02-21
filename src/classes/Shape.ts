@@ -2,10 +2,18 @@ abstract class Shape {
   program: WebGLProgram;
   canvas: HTMLCanvasElement;
   gl: WebGL2RenderingContext;
-  constructor(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
+  color: Color;
+  points: Point[];
+  constructor(
+    canvas: HTMLCanvasElement,
+    gl: WebGL2RenderingContext,
+    color: Color
+  ) {
     this.canvas = canvas;
     this.gl = gl;
     this.program = this.createShaderProgram();
+    this.color = color;
+    this.points = [];
   }
 
   createShaderProgram() {
