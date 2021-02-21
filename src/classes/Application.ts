@@ -1,4 +1,5 @@
 import { createShader, rgbaToId } from "../utils/utils";
+import Polygon from "./Polygon";
 import Shape from "./Shape";
 
 class Application {
@@ -16,6 +17,7 @@ class Application {
   mousePos: Point = [0, 0];
   mousePosBef: Point = [0, 0];
   mousePressed: boolean = false;
+  drawingShape: Shape | null = null;
 
   constructor(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
     this.canvas = canvas;
@@ -24,6 +26,15 @@ class Application {
 
     this.gl.viewport(0, 0, canvas.width, canvas.height);
     this.selectProgram = this.setupSelectProgram();
+  }
+
+  setMode(mode: Mode) {
+    if (mode === this.mode) {
+      return;
+    }
+    this.mode = mode;
+    this.selected = undefined;
+    this.drawingShape = null;
   }
 
   setupSelectProgram() {
@@ -159,8 +170,8 @@ class Application {
       }
     }
 
-    const x = this.mousePos[0];
-    const y = this.canvas.clientHeight - this.mousePos[1];
+    const x = ((this.mousePos[0] + 1) / 2) * this.canvas.width;
+    const y = ((this.mousePos[1] + 1) / 2) * this.canvas.height;
     const rgba = new Uint8Array(4);
     this.gl.readPixels(x, y, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
     this.pixelId = rgbaToId([rgba[0], rgba[1], rgba[2], rgba[3]]);
@@ -189,6 +200,8 @@ class Application {
           this.mousePos
         );
       }
+    } else {
+      this.drawingShape?.updateLastPoint(this.mousePos);
     }
   }
 
@@ -206,15 +219,38 @@ class Application {
           id: this.pixelId,
           shape,
         };
-        console.log(this.pixelId);
       } else {
         this.selected = undefined;
+      }
+    } else if (this.mode === "polygon") {
+      if (this.drawingShape) {
+        this.drawingShape.addPoint(this.mousePos);
+      } else {
+        const poly = new Polygon(
+          this.canvas,
+          this.gl,
+          [Math.random(), Math.random(), Math.random()],
+          [Math.random(), Math.random(), Math.random()]
+        );
+        poly.addPoint(this.mousePos);
+        poly.addPoint(this.mousePos);
+        this.shapeList.push(poly);
+        this.drawingShape = poly;
+        this.selected = {
+          id: poly.id,
+          shape: poly,
+        };
       }
     }
   }
 
   onMouseUp(point: Point) {
     this.mousePressed = false;
+  }
+
+  onEscKey() {
+    this.drawingShape = null;
+    this.selected = undefined;
   }
 }
 

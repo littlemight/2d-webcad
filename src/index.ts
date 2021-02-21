@@ -12,7 +12,10 @@ const app = new Application(canvas, gl);
 
 function getMouseCoord(e: MouseEvent): Point {
   const canvasBound = canvas.getBoundingClientRect();
-  return [e.x - canvasBound.left, e.y - canvasBound.top];
+  return [
+    ((e.x - canvasBound.left) / canvas.width) * 2 - 1,
+    -(((e.y - canvasBound.top) / canvas.height) * 2 - 1),
+  ];
 }
 
 canvas.onmousedown = (e) => {
@@ -25,6 +28,50 @@ canvas.onmousemove = (e) => {
 
 canvas.onmouseup = (e) => {
   app.onMouseUp(getMouseCoord(e));
+};
+
+document.onkeypress = (e) => {
+  if (e.key === "Enter") {
+    app.onEscKey();
+  }
+};
+
+const selectBtn = document.getElementById("selectBtn") as HTMLButtonElement;
+const lineBtn = document.getElementById("lineBtn") as HTMLButtonElement;
+const squareBtn = document.getElementById("squareBtn") as HTMLButtonElement;
+const polygonBtn = document.getElementById("polygonBtn") as HTMLButtonElement;
+const btns = [selectBtn, lineBtn, squareBtn, polygonBtn];
+selectBtn.disabled = true;
+selectBtn.onclick = () => {
+  app.setMode("selecting");
+  for (const btn of btns) {
+    btn.disabled = false;
+  }
+  selectBtn.disabled = true;
+};
+
+lineBtn.onclick = () => {
+  app.setMode("line");
+  for (const btn of btns) {
+    btn.disabled = false;
+  }
+  lineBtn.disabled = true;
+};
+
+squareBtn.onclick = () => {
+  app.setMode("square");
+  for (const btn of btns) {
+    btn.disabled = false;
+  }
+  squareBtn.disabled = true;
+};
+
+polygonBtn.onclick = () => {
+  app.setMode("polygon");
+  for (const btn of btns) {
+    btn.disabled = false;
+  }
+  polygonBtn.disabled = true;
 };
 
 const poly = new Polygon(canvas, gl, [1, 0, 0], [0, 1, 0]);

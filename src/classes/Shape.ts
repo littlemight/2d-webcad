@@ -71,8 +71,8 @@ abstract class Shape {
   }
 
   onMouseMove(id: number, bef: Point, pos: Point) {
-    const dx = ((pos[0] - bef[0]) / this.canvas.width) * 2;
-    const dy = (-(pos[1] - bef[1]) / this.canvas.height) * 2;
+    const dx = pos[0] - bef[0];
+    const dy = pos[1] - bef[1];
     if (id === this.id) {
       for (let i = 0; i < this.points.length; ++i) {
         this.points[i].pos[0] += dx;
@@ -87,6 +87,17 @@ abstract class Shape {
         ];
       }
     }
+  }
+
+  updateLastPoint(pos: Point) {
+    const p = this.points[this.points.length - 1];
+    if (!p) {
+      return;
+    }
+    this.points[this.points.length - 1] = {
+      id: p.id,
+      pos,
+    };
   }
 
   abstract render(selected: boolean, program: WebGLProgram | null): void;
