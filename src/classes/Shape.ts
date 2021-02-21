@@ -1,4 +1,4 @@
-let _id = 0;
+import { createId, createShader } from "../utils/utils";
 
 abstract class Shape {
   program: WebGLProgram;
@@ -6,8 +6,8 @@ abstract class Shape {
   gl: WebGL2RenderingContext;
   color: Color;
   selectedColor: Color;
-  points: Point[];
-  id: number = _id++;
+  points: { id: number; pos: Point }[];
+  id: number = createId();
   constructor(
     canvas: HTMLCanvasElement,
     gl: WebGL2RenderingContext,
@@ -29,7 +29,8 @@ abstract class Shape {
     }
     this.gl.attachShader(
       program,
-      this.createShader(
+      createShader(
+        this.gl,
         this.gl.VERTEX_SHADER,
         `
           precision mediump float;
@@ -42,7 +43,8 @@ abstract class Shape {
     );
     this.gl.attachShader(
       program,
-      this.createShader(
+      createShader(
+        this.gl,
         this.gl.FRAGMENT_SHADER,
         `
           precision mediump float;
@@ -57,24 +59,18 @@ abstract class Shape {
     return program;
   }
 
-  createShader(type: number, shaderCode: string): WebGLShader {
-    const shader = this.gl.createShader(type);
-    if (!shader) {
-      throw new Error("Error on creating shader!");
-    }
-    this.gl.shaderSource(shader, shaderCode);
-    this.gl.compileShader(shader);
-    return shader;
+  hasId(id: number) {
+    return this.id === id || this.points.filter((v) => v.id === id).length;
   }
 
-  abstract renderSelected(): void;
-  abstract renderShape(): void;
-  render(selected: boolean) {
-    this.renderShape();
-    if (selected) {
-      this.renderSelected();
-    }
+  addPoint(point: Point) {
+    this.points.push({
+      id: createId(),
+      pos: point,
+    });
   }
+
+  abstract render(selected: boolean, program: WebGLProgram | null): void;
 }
 
 export default Shape;

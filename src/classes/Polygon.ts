@@ -1,10 +1,15 @@
+import { idToRGBA } from "../utils/utils";
 import Shape from "./Shape";
 
 class Polygon extends Shape {
-  renderSelected() {
-    this.gl.useProgram(this.program);
+  renderBorderSelected(program: WebGLProgram | null) {
+    const isSelectMode = program !== null;
+    if (!program) {
+      program = this.program;
+    }
+    this.gl.useProgram(program);
 
-    const arr = this.points.flat();
+    const arr = this.points.map((v) => v.pos).flat();
 
     const posBuf = this.gl.createBuffer();
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
@@ -14,19 +19,31 @@ class Polygon extends Shape {
       this.gl.STATIC_DRAW
     );
 
-    const a_pos = this.gl.getAttribLocation(this.program, "a_pos");
+    const a_pos = this.gl.getAttribLocation(program, "a_pos");
     this.gl.enableVertexAttribArray(a_pos);
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
     this.gl.vertexAttribPointer(a_pos, 2, this.gl.FLOAT, false, 0, 0);
 
     this.gl.lineWidth(6);
 
-    const u_color = this.gl.getUniformLocation(this.program, "u_color");
+    const u_color = this.gl.getUniformLocation(program, "u_color");
 
-    this.gl.uniform3fv(u_color, new Float32Array([0.4, 0.4, 0]));
+    if (isSelectMode) {
+      this.gl.uniform4fv(u_color, new Float32Array(idToRGBA(this.id)));
+    } else {
+      this.gl.uniform3fv(u_color, new Float32Array([0.4, 0.4, 0]));
+    }
     this.gl.drawArrays(this.gl.LINE_LOOP, 0, arr.length / 2);
+  }
 
-    const arr2 = this.points
+  renderPointSelected(program: WebGLProgram | null) {
+    const isSelectMode = program !== null;
+    if (!program) {
+      program = this.program;
+    }
+    this.gl.useProgram(program);
+    const arr = this.points
+      .map((v) => v.pos)
       .map((v) => {
         return [
           v[0] + 0.015,
@@ -41,29 +58,43 @@ class Polygon extends Shape {
       })
       .flat();
 
-    // const posBuf2 = this.gl.createBuffer();
-    // this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf2);
+    const posBuf = this.gl.createBuffer();
+    const a_pos = this.gl.getAttribLocation(program, "a_pos");
+    this.gl.enableVertexAttribArray(a_pos);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
+    this.gl.vertexAttribPointer(a_pos, 2, this.gl.FLOAT, false, 0, 0);
     this.gl.bufferData(
       this.gl.ARRAY_BUFFER,
-      new Float32Array(arr2),
+      new Float32Array(arr),
       this.gl.STATIC_DRAW
     );
 
-    const a_pos2 = this.gl.getAttribLocation(this.program, "a_pos");
-    this.gl.enableVertexAttribArray(a_pos2);
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
-    this.gl.vertexAttribPointer(a_pos2, 2, this.gl.FLOAT, false, 0, 0);
-
-    this.gl.uniform3fv(u_color, new Float32Array(this.selectedColor));
-    for (let i = 0; i * 4 < arr2.length; ++i) {
+    const u_color = this.gl.getUniformLocation(program, "u_color");
+    for (let i = 0; i < this.points.length; ++i) {
+      if (isSelectMode) {
+        this.gl.uniform4fv(
+          u_color,
+          new Float32Array(idToRGBA(this.points[i].id))
+        );
+      } else {
+        this.gl.uniform3fv(u_color, new Float32Array(this.selectedColor));
+      }
       this.gl.drawArrays(this.gl.TRIANGLE_STRIP, i * 4, 4);
     }
   }
 
-  renderShape() {
-    this.gl.useProgram(this.program);
+  render(selected: boolean, program: WebGLProgram | null) {
+    const isSelectMode = program !== null;
+    if (!program) {
+      program = this.program;
+    }
+    if (selected) {
+      this.renderPointSelected(isSelectMode ? program : null);
+      this.renderBorderSelected(isSelectMode ? program : null);
+    }
+    this.gl.useProgram(program);
 
-    const arr = this.points.flat();
+    const arr = this.points.map((v) => v.pos).flat();
 
     const posBuf = this.gl.createBuffer();
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
@@ -73,13 +104,17 @@ class Polygon extends Shape {
       this.gl.STATIC_DRAW
     );
 
-    const a_pos = this.gl.getAttribLocation(this.program, "a_pos");
+    const a_pos = this.gl.getAttribLocation(program, "a_pos");
     this.gl.enableVertexAttribArray(a_pos);
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
     this.gl.vertexAttribPointer(a_pos, 2, this.gl.FLOAT, false, 0, 0);
 
-    const u_color = this.gl.getUniformLocation(this.program, "u_color");
-    this.gl.uniform3fv(u_color, new Float32Array(this.color));
+    const u_color = this.gl.getUniformLocation(program, "u_color");
+    if (isSelectMode) {
+      this.gl.uniform4fv(u_color, new Float32Array(idToRGBA(this.id)));
+    } else {
+      this.gl.uniform3fv(u_color, new Float32Array(this.color));
+    }
 
     this.gl.drawArrays(this.gl.TRIANGLE_FAN, 0, arr.length / 2);
   }

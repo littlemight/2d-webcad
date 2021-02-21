@@ -9,13 +9,31 @@ if (!gl) {
 }
 
 const app = new Application(canvas, gl);
+
+function getMouseCoord(e: MouseEvent): Point {
+  const canvasBound = canvas.getBoundingClientRect();
+  return [e.x - canvasBound.left, e.y - canvasBound.top];
+}
+
+canvas.onmousedown = (e) => {
+  app.onMouseDown(getMouseCoord(e));
+};
+
+canvas.onmousemove = (e) => {
+  app.onMouseMove(getMouseCoord(e));
+};
+
+canvas.onmouseup = (e) => {
+  app.onMouseUp(getMouseCoord(e));
+};
+
 const poly = new Polygon(canvas, gl, [1, 0, 0], [0, 1, 0]);
-poly.points.push([-0.5, 0]);
-poly.points.push([0, -0.5]);
-poly.points.push([0.5, 0]);
-poly.points.push([0, 0.5]);
+poly.addPoint([-0.5, 0]);
+poly.addPoint([0, -0.5]);
+poly.addPoint([0.5, 0]);
+poly.addPoint([0, 0.5]);
 app.shapeList.push(poly);
-app.selectedShape = poly;
+
 const render = () => {
   app.render();
   window.requestAnimationFrame(render);
