@@ -27,9 +27,9 @@ abstract class Shape {
         this.gl.VERTEX_SHADER,
         `
           precision mediump float;
-          uniform vec2 u_pos;
+          attribute vec2 a_pos;
           void main() {
-            gl_Position = vec4(u_pos, 0, 1);
+            gl_Position = vec4(a_pos, 0, 1);
           }
         `
       )
