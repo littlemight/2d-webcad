@@ -70,6 +70,25 @@ abstract class Shape {
     });
   }
 
+  onMouseMove(id: number, bef: Point, pos: Point) {
+    const dx = ((pos[0] - bef[0]) / this.canvas.width) * 2;
+    const dy = (-(pos[1] - bef[1]) / this.canvas.height) * 2;
+    if (id === this.id) {
+      for (let i = 0; i < this.points.length; ++i) {
+        this.points[i].pos[0] += dx;
+        this.points[i].pos[1] += dy;
+      }
+    } else {
+      const i = this.points.findIndex((v) => v.id === id);
+      if (i >= 0 && i < this.points.length) {
+        this.points[i].pos = [
+          this.points[i].pos[0] + dx,
+          this.points[i].pos[1] + dy,
+        ];
+      }
+    }
+  }
+
   abstract render(selected: boolean, program: WebGLProgram | null): void;
 }
 

@@ -14,6 +14,8 @@ class Application {
   selectProgram: WebGLProgram | null = null;
   frameBuf: WebGLFramebuffer | null = null;
   mousePos: Point = [0, 0];
+  mousePosBef: Point = [0, 0];
+  mousePressed: boolean = false;
 
   constructor(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
     this.canvas = canvas;
@@ -177,15 +179,25 @@ class Application {
   }
 
   onMouseMove(point: Point) {
+    this.mousePosBef = this.mousePos;
     this.mousePos = point;
+    if (this.mode === "selecting") {
+      if (this.mousePressed) {
+        this.selected?.shape.onMouseMove(
+          this.selected.id,
+          this.mousePosBef,
+          this.mousePos
+        );
+      }
+    }
   }
 
   onMouseDown(point: Point) {
+    this.mousePressed = true;
     if (this.mode === "selecting") {
       if (this.pixelId === undefined) {
         return;
       }
-      console.log(this.pixelId);
       const shape: Shape | undefined = this.shapeList.filter((v) =>
         v.hasId(this.pixelId!)
       )[0];
@@ -194,13 +206,16 @@ class Application {
           id: this.pixelId,
           shape,
         };
+        console.log(this.pixelId);
       } else {
         this.selected = undefined;
       }
     }
   }
 
-  onMouseUp(point: Point) {}
+  onMouseUp(point: Point) {
+    this.mousePressed = false;
+  }
 }
 
 export default Application;
