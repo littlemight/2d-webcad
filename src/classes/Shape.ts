@@ -61,6 +61,7 @@ abstract class Shape {
     return shader;
   }
 
+  abstract render(): void;
 }
 
 export default Shape;
