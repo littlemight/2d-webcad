@@ -101,6 +101,10 @@ abstract class Shape {
   }
 
   abstract render(selected: boolean, program: WebGLProgram | null): void;
+
+  // TO DO:
+  // array of json buat save sama load:
+  // satu json = {type, color, selected color, points, id}
 }
 
 export default Shape;
