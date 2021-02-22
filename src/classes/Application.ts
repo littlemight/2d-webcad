@@ -189,7 +189,22 @@ class Application {
     }
   }
 
-  onMouseMove(point: Point) {
+  displayPos(document_id: string, point: Point) {
+    const doc = document.getElementById(document_id);
+    if (doc) {
+      // Round to 2 decimal biar rapi lol
+      doc.innerText = JSON.stringify(
+        point.map((p) => Number(p.toPrecision(2)))
+      );
+    }
+  }
+
+  onMouseMove(point: Point, mouse_point?: Point) {
+    if (mouse_point) {
+      this.displayPos("mouse-pos", mouse_point);
+    }
+    this.displayPos("canvas-pos", point);
+
     this.mousePosBef = this.mousePos;
     this.mousePos = point;
     if (this.mode === "selecting") {
@@ -203,6 +218,14 @@ class Application {
     } else {
       this.drawingShape?.updateLastPoint(this.mousePos);
     }
+
+    const canvas_pos = document.getElementById("canvas-pos");
+    if (canvas_pos)
+      canvas_pos.innerText = JSON.stringify(
+        point.map((e) => Number(e.toPrecision(2)))
+      );
+    const mouse_pos = document.getElementById("mouse-pos");
+    if (mouse_pos) mouse_pos.innerText = JSON.stringify(mouse_point);
   }
 
   onMouseDown(point: Point) {
@@ -251,6 +274,17 @@ class Application {
   onEscKey() {
     this.drawingShape = null;
     this.selected = undefined;
+  }
+
+  onDelKey() {
+    if (this.selected?.shape) {
+      const idx = this.shapeList.findIndex((e) => {
+        return e.id == this.selected?.id;
+      });
+      if (idx === -1) return;
+      this.shapeList.splice(idx, 1);
+      this.selected = undefined;
+    }
   }
 }
 

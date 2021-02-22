@@ -10,30 +10,25 @@ if (!gl) {
 
 const app = new Application(canvas, gl);
 
-function getMouseCoord(e: MouseEvent): Point {
+const getCanvasPos = (e: MouseEvent): Point => {
   const canvasBound = canvas.getBoundingClientRect();
+  // enforce -1 to 1 axis
   return [
     ((e.x - canvasBound.left) / canvas.width) * 2 - 1,
     -(((e.y - canvasBound.top) / canvas.height) * 2 - 1),
   ];
-}
+};
 
 canvas.onmousedown = (e) => {
-  app.onMouseDown(getMouseCoord(e));
+  app.onMouseDown(getCanvasPos(e));
 };
 
 canvas.onmousemove = (e) => {
-  app.onMouseMove(getMouseCoord(e));
+  app.onMouseMove(getCanvasPos(e), [e.x, e.y]);
 };
 
 canvas.onmouseup = (e) => {
-  app.onMouseUp(getMouseCoord(e));
-};
-
-document.onkeyup = (e) => {
-  if (e.key === "Escape") {
-    app.onEscKey();
-  }
+  app.onMouseUp(getCanvasPos(e));
 };
 
 const selectBtn = document.getElementById("selectBtn") as HTMLButtonElement;
@@ -72,6 +67,25 @@ polygonBtn.onclick = () => {
     btn.disabled = false;
   }
   polygonBtn.disabled = true;
+};
+
+document.onkeyup = (e) => {
+  switch (e.key) {
+    case "Escape":
+      app.onEscKey();
+      break;
+    case "Delete":
+    case "Backspace":
+      app.onDelKey();
+      break;
+    case "1":
+    case "2":
+    case "3":
+    case "4":
+      const idx = parseInt(e.key) - 1;
+      if (btns[idx]) btns[idx].onclick?.(new MouseEvent("")); // lolololol
+      break;
+  }
 };
 
 const poly = new Polygon(canvas, gl, [1, 0, 0], [0, 1, 0]);
