@@ -30,8 +30,8 @@ canvas.onmouseup = (e) => {
   app.onMouseUp(getMouseCoord(e));
 };
 
-document.onkeypress = (e) => {
-  if (e.key === "Enter") {
+document.onkeyup = (e) => {
+  if (e.key === "Escape") {
     app.onEscKey();
   }
 };
