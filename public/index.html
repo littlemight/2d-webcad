@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>2D Web Cad</title>
+    <link rel="stylesheet" href="./tailwind.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="js-main" class="main">
+      <div class="header w-full">
+        <button id="selectBtn" class="btn btn-blue">Select</button>
+        <button id="lineBtn" class="btn btn-blue">Line</button>
+        <button id="squareBtn" class="btn btn-blue">Square</button>
+        <button id="polygonBtn" class="btn btn-blue">Polygon</button>
+        <button id="saveBtn" class="btn btn-blue">Save</button>
+        <button id="loadBtn" class="btn btn-blue">Load</button>
+      </div>
+      <div style="border-width: 2; border-color: black">
+        <p>Mouse: <span id="mouse-pos"></span></p>
+        <p>Canvas: <span id="canvas-pos"></span></p>
+        <canvas id="gl-display" width="800" height="800"></canvas>
+      </div>
+    </div>
+    <script src="../src/index.ts" defer></script>
+  </body>
+</html>

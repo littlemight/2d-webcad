@@ -20,7 +20,7 @@
   },
   "include": [
     "src/**/*"
-  ],
+, "postcss.config.js", "tailwind.config.js"  ],
   "exclude": [
     ".git",
     "node_modules"

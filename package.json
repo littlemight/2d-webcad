@@ -15,9 +15,10 @@
   "description": "TypeScript app with parcel bundler.",
   "main": "lib/parcel-typescript-example.js",
   "scripts": {
-    "start": "parcel serve src/index.html",
+    "start": "parcel serve public/index.html",
     "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url .",
-    "watch": "parcel watch src/index.html",
+    "build-css": "tailwindcss build src/css/tailwind.css -o public/tailwind.css",
+    "watch": "parcel watch public/index.html",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -30,12 +31,16 @@
   },
   "homepage": "https://azu.github.io/parcel-typescript-example/",
   "devDependencies": {
-    "autoprefixer": "^10.2.4",
     "cross-env": "^5.2.0",
     "gh-pages": "^1.2.0",
     "parcel-bundler": "^1.9.7",
-    "postcss": "^8.2.6",
-    "tailwindcss": "^2.0.3",
     "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9",
+    "parcel": "^2.0.0-nightly.605",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

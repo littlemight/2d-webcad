@@ -89,11 +89,11 @@ document.onkeyup = (e) => {
 };
 
 const poly = new Polygon(canvas, gl, [1, 0, 0], [0, 1, 0]);
-poly.addPoint([-0.5, 0]);
-poly.addPoint([0, -0.5]);
-poly.addPoint([0.5, 0]);
-poly.addPoint([0, 0.5]);
-app.shapeList.push(poly);
+// poly.addPoint([-0.5, 0]);
+// poly.addPoint([0, -0.5]);
+// poly.addPoint([0.5, 0]);
+// poly.addPoint([0, 0.5]);
+// app.shapeList.push(poly);
 
 const render = () => {
   app.render();
