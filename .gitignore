@@ -170,3 +170,8 @@ crashlytics-build.properties
 /lib
 /.cache/
 /dist/
+
+package-lock.json
+# yarn.lock
+
+/.parcel-cache/

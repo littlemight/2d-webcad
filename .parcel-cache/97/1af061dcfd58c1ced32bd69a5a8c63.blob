@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>2D Web Cad</title>
+    <link rel="stylesheet" href="17483c6a3b7b76ff913922a4cbe6341c">
+    <link rel="stylesheet" href="6e91024525be3b3fb7e39b35734ba622">
+  </head>
+  <body>
+    <div id="js-main" class="main">
+      <div class="header w-full">
+        <button id="selectBtn" class="btn btn-blue">Select</button>
+        <button id="lineBtn" class="btn btn-blue">Line</button>
+        <button id="squareBtn" class="btn btn-blue">Square</button>
+        <button id="polygonBtn" class="btn btn-blue">Polygon</button>
+        <button id="saveBtn" class="btn btn-blue">Save</button>
+        <button id="loadBtn" class="btn btn-blue">Load</button>
+      </div>
+      <div style="aa30b59dcc33415534947dc45bd57798">
+        <p>Mouse: <span id="mouse-pos"></span></p>
+        <p>Canvas: <span id="canvas-pos"></span></p>
+        <canvas id="gl-display" width="800" height="800"></canvas>
+      </div>
+    </div>
+    <script src="9b5c422cd265a3780073e779f525b6b0" defer=""></script>
+  </body>
+</html>

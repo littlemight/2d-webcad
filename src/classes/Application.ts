@@ -2,6 +2,7 @@ import { createShader, rgbaToId } from "../utils/utils";
 import Polygon from "./Polygon";
 import Rectangle from "./Rectangle";
 import Shape from "./Shape";
+import Line from "./Line";
 
 class Application {
   canvas: HTMLCanvasElement;
@@ -284,6 +285,25 @@ class Application {
         this.selected = {
           id: rect.id,
           shape: rect,
+        };
+      }
+    }
+    else if (this.mode === "line") {
+      if (this.drawingShape) {
+        this.drawingShape.addPoint(this.mousePos);
+      }
+      else {
+        const line = new Line(
+          this.canvas,
+          this.gl,
+          [Math.random(), Math.random(), Math.random()],
+          [Math.random(), Math.random(), Math.random()]
+        );
+        line.addPoint(this.mousePos);
+        this.shapeList.push(line);
+        this.selected = {
+          id: line.id,
+          shape: line,
         };
       }
     }

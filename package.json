@@ -1,46 +1,46 @@
 {
   "directories": {
-    "lib": "lib",
-    "test": "test"
+  "lib": "lib",
+  "test": "test"
   },
   "author": "azu",
   "license": "MIT",
   "files": [
-    "bin/",
-    "lib/",
-    "src/"
+  "bin/",
+  "lib/",
+  "src/"
   ],
   "name": "parcel-typescript-example",
   "version": "1.0.0",
   "description": "TypeScript app with parcel bundler.",
   "main": "lib/parcel-typescript-example.js",
   "scripts": {
-    "start": "parcel serve public/index.html",
-    "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url .",
-    "build-css": "tailwindcss build src/css/tailwind.css -o public/tailwind.css",
-    "watch": "parcel watch public/index.html",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+  "start": "parcel serve public/index.html",
+  "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url .",
+  "build-css": "tailwindcss build src/css/tailwind.css -o public/tailwind.css",
+  "watch": "parcel watch public/index.html",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/azu/parcel-typescript-example.git"
+  "type": "git",
+  "url": "https://github.com/azu/parcel-typescript-example.git"
   },
   "bugs": {
-    "url": "https://github.com/azu/parcel-typescript-example/issues"
+  "url": "https://github.com/azu/parcel-typescript-example/issues"
   },
   "homepage": "https://azu.github.io/parcel-typescript-example/",
   "devDependencies": {
-    "cross-env": "^5.2.0",
-    "gh-pages": "^1.2.0",
-    "parcel-bundler": "^1.9.7",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
-    "typescript": "^4.1.5"
+  "cross-env": "^5.2.0",
+  "gh-pages": "^1.2.0",
+  "parcel-bundler": "^1.9.7",
+  "typescript": "^4.1.5"
   },
   "dependencies": {
-    "@tailwindcss/postcss7-compat": "^2.0.3",
-    "autoprefixer": "^9",
-    "parcel": "^2.0.0-nightly.605",
-    "postcss": "^7"
+  "@tailwindcss/postcss7-compat": "^2.0.3",
+  "autoprefixer": "^9",
+  "parcel": "^2.0.0-nightly.605",
+  "postcss": "^7",
+  "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
-}
+  }
