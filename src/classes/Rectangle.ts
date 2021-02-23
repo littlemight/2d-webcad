@@ -7,7 +7,7 @@ class Rectangle extends Shape {
         canvas: HTMLCanvasElement,
         gl: WebGL2RenderingContext,
         color: Color,
-        selectedColor: Color,
+        selectedColor: Color
     ) {
         super(canvas, gl, color, selectedColor,[]);
         this.rectPoints = [];
@@ -41,7 +41,7 @@ class Rectangle extends Shape {
         if (isSelectMode) {
             this.gl.uniform4fv(u_color, new Float32Array(idToRGBA(this.id)));
         } else {
-            this.gl.uniform3fv(u_color, new Float32Array([0.4, 0.4, 0]));
+            this.gl.uniform3fv(u_color, new Float32Array([0, 0, 0]));
         }
         this.gl.drawArrays(this.gl.LINE_LOOP, 0, arr.length / 2);
     }
@@ -94,44 +94,49 @@ class Rectangle extends Shape {
     }
 
     addRectPoint(point: Point, _id: number | null, index: number) {
-        if (_id) {
+        if (this.rectPoints.length > index) {
+            this.rectPoints[index].pos = point;
+        } else {
             this.rectPoints.push({
-                id: _id,
+                id: _id ? _id : createId(),
                 pos: point,
             });
-        } else {
-            if (this.rectPoints.length > index) {
-                this.rectPoints[index].pos = point;
-            }
-            else {
-                this.rectPoints.push({
-                    id: createId(),
-                    pos: point,
-                });
-            }
         }
     }
-    
+
     createAdditionalPoint() {
         if (this.points.length < 2) {
-            return
-        }
-        else {
-            const temp_1 = Math.abs(this.points[1].pos[0] - this.points[0].pos[0])
-            const temp_2 = Math.abs(this.points[1].pos[1] - this.points[0].pos[1])
-            let dif1 = (this.points[1].pos[0] - this.points[0].pos[0]) < 0 ? -1 : 1;
-            let dif2 = (this.points[1].pos[1] - this.points[0].pos[1]) < 0 ? -1 : 1;
+            return;
+        } else {
+            const temp_1 = Math.abs(this.points[1].pos[0] - this.points[0].pos[0]);
+            const temp_2 = Math.abs(this.points[1].pos[1] - this.points[0].pos[1]);
+            let dif1 = this.points[1].pos[0] - this.points[0].pos[0] < 0 ? -1 : 1;
+            let dif2 = this.points[1].pos[1] - this.points[0].pos[1] < 0 ? -1 : 1;
             let delta = 0;
             if (temp_1 < temp_2) {
                 delta = temp_1;
-            }
-            else {
+            } else {
                 delta = temp_2;
             }
             this.addRectPoint(this.points[0].pos, this.points[0].id, 0);
-            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1]], null, 1);
-            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1] + (delta * dif2)], null, 2);
-            this.addRectPoint([this.points[0].pos[0], this.points[0].pos[1] + (delta * dif2)], null, 3)
+            this.addRectPoint(
+                [this.points[0].pos[0] + delta * dif1, this.points[0].pos[1]],
+                null,
+                1
+            );
+            this.addRectPoint(
+                [
+                    this.points[0].pos[0] + delta * dif1,
+                    this.points[0].pos[1] + delta * dif2,
+                ],
+                null,
+                2
+            );
+            this.addRectPoint(
+                [this.points[0].pos[0], this.points[0].pos[1] + delta * dif2],
+                null,
+                3
+            );
         }
     }
 
@@ -177,11 +182,9 @@ class Rectangle extends Shape {
             id: this.id,
             color: this.color,
             selectedColor: this.selectedColor,
-            points:this.points
-        };    
-
+            points: this.points,
+        };
     }
-      
 }
 
 export default Rectangle;

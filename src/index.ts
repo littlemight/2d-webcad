@@ -41,6 +41,7 @@ const loadBtn = document.getElementById("loadBtn") as HTMLButtonElement;
 const fileSelector = document.getElementById("fileSelect") as HTMLInputElement;
 
 const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, colorBtn];
+// const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn];
 selectBtn.disabled = true;
 selectBtn.onclick = () => {
   app.setMode("selecting");
@@ -91,10 +92,12 @@ loadBtn.onclick = () => {
 
 colorBtn.onclick = () => {
   // tambah ubah warna logic di Application.ts
-  for (const btn of btns) {
-    btn.disabled = false;
+  app.applyingColor = !app.applyingColor;
+  if (app.applyingColor) {
+    colorBtn.innerText = "Color (applying)";
+  } else {
+    colorBtn.innerText = "Color";
   }
-  colorBtn.disabled = true;
 };
 
 document.onkeyup = (e) => {
@@ -112,6 +115,9 @@ document.onkeyup = (e) => {
     case "4":
       const idx = parseInt(e.key) - 1;
       if (btns[idx]) btns[idx].onclick?.(new MouseEvent("")); // lolololol
+      break;
+    case "c":
+      colorBtn.onclick?.(new MouseEvent(""));
       break;
   }
 };

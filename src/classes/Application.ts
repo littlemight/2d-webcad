@@ -1,4 +1,9 @@
-import { createShader, rgbaToId } from "../utils/utils";
+import {
+  createShader,
+  rgbaToId,
+  hexaToRGBA,
+  bulkProgramSetup,
+} from "../utils/utils";
 import Polygon from "./Polygon";
 import Rectangle from "./Rectangle";
 import Shape from "./Shape";
@@ -14,6 +19,7 @@ class Application {
   };
   pixelId?: number; // buat selecting
   mode: Mode = "selecting";
+  applyingColor: Boolean = false;
   selectProgram: WebGLProgram | null = null;
   frameBuf: WebGLFramebuffer | null = null;
   mousePos: Point = [0, 0];
@@ -44,116 +50,28 @@ class Application {
     if (!selectProgram) {
       throw new Error("Failed when creating hitbox program!");
     }
-    this.gl.attachShader(
-      selectProgram,
-      createShader(
-        this.gl,
-        this.gl.VERTEX_SHADER,
-        `
-          precision mediump float;
-
-          attribute vec2 a_pos;
-
-          void main() {
-            gl_Position = vec4(a_pos, 0, 1);
-          }
-        `
-      )
-    );
-
-    this.gl.attachShader(
-      selectProgram,
-      createShader(
-        this.gl,
-        this.gl.FRAGMENT_SHADER,
-        `
-          precision mediump float;
-
-          uniform vec4 u_color;
-
-          void main() {
-            gl_FragColor = u_color;
-          }
-        `
-      )
-    );
-
-    this.gl.linkProgram(selectProgram);
-
-    const texBuf = this.gl.createTexture();
-    if (!texBuf) {
-      throw new Error("Failed creating texture");
-    }
-    this.gl.bindTexture(this.gl.TEXTURE_2D, texBuf);
-    this.gl.texParameteri(
-      this.gl.TEXTURE_2D,
-      this.gl.TEXTURE_MIN_FILTER,
-      this.gl.LINEAR
-    );
-    this.gl.texParameteri(
-      this.gl.TEXTURE_2D,
-      this.gl.TEXTURE_WRAP_S,
-      this.gl.CLAMP_TO_EDGE
-    );
-    this.gl.texParameteri(
-      this.gl.TEXTURE_2D,
-      this.gl.TEXTURE_WRAP_T,
-      this.gl.CLAMP_TO_EDGE
-    );
-
-    const depBuf = this.gl.createRenderbuffer();
-    if (!depBuf) {
-      throw new Error("Failed creating render buffer");
-    }
-    this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, depBuf);
-
-    this.gl.bindTexture(this.gl.TEXTURE_2D, texBuf);
-    this.gl.texImage2D(
-      this.gl.TEXTURE_2D,
-      0,
-      this.gl.RGBA,
-      this.gl.canvas.width,
-      this.gl.canvas.height,
-      0,
-      this.gl.RGBA,
-      this.gl.UNSIGNED_BYTE,
-      null
-    );
-    this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, depBuf);
-    this.gl.renderbufferStorage(
-      this.gl.RENDERBUFFER,
-      this.gl.DEPTH_COMPONENT16,
-      this.gl.canvas.width,
-      this.gl.canvas.height
-    );
-
-    const frameBuf = this.gl.createFramebuffer();
-    if (!frameBuf) {
-      throw new Error("Failed creating frame buffer");
-    }
-    this.frameBuf = frameBuf;
-
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, frameBuf);
-
-    // using the texture and depth buffer with frame buffer
-    this.gl.framebufferTexture2D(
-      this.gl.FRAMEBUFFER,
-      this.gl.COLOR_ATTACHMENT0,
-      this.gl.TEXTURE_2D,
-      texBuf,
-      0
-    );
-    this.gl.framebufferRenderbuffer(
-      this.gl.FRAMEBUFFER,
-      this.gl.DEPTH_ATTACHMENT,
-      this.gl.RENDERBUFFER,
-      depBuf
-    );
-
+    bulkProgramSetup(selectProgram, this.gl, this.frameBuf);
     return selectProgram;
   }
 
+  changeSelectedColor() {
+    let temp_color = "#000000";
+    let temp_selectedColor = "#000000";
+
+    const color = document.getElementById("color") as HTMLInputElement;
+    const border = document.getElementById("border") as HTMLInputElement;
+
+    temp_color = color.value;
+    temp_selectedColor = border.value;
+    const color_arr = hexaToRGBA(temp_color);
+    const selcolor_arr = hexaToRGBA(temp_selectedColor);
+    this.selected?.shape.updateColor(color_arr, selcolor_arr);
+  }
+
   render() {
+    if (this.selected && this.mode === "selecting" && this.applyingColor) {
+      this.changeSelectedColor();
+    }
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuf);
     this.gl.enable(this.gl.DEPTH_TEST);
 
@@ -165,6 +83,7 @@ class Application {
     this.gl.useProgram(this.selectProgram);
 
     this.selected?.shape.render(true, this.selectProgram);
+
     for (const shape of this.shapeList) {
       if (shape.id === this.selected?.shape.id) {
         continue;
@@ -238,6 +157,7 @@ class Application {
 
   onMouseDown(point: Point) {
     this.mousePressed = true;
+    let addNewShape = false;
     if (this.mode === "selecting") {
       if (this.pixelId === undefined) {
         return;
@@ -264,14 +184,8 @@ class Application {
           [Math.random(), Math.random(), Math.random()],
           []
         );
-        poly.addPoint(this.mousePos);
-        // poly.addPoint(this.mousePos);
-        this.shapeList.push(poly);
         this.drawingShape = poly;
-        this.selected = {
-          id: poly.id,
-          shape: poly,
-        };
+        addNewShape = true;
       }
     } else if (this.mode === "square") {
       if (this.drawingShape) {
@@ -284,18 +198,11 @@ class Application {
           [Math.random(), Math.random(), Math.random()],
           [Math.random(), Math.random(), Math.random()],
         );
-        rect.addPoint(this.mousePos);
-        rect.addPoint(this.mousePos);
-        this.shapeList.push(rect);
         this.drawingShape = rect;
-        this.selected = {
-          id: rect.id,
-          shape: rect,
-        };
+        addNewShape = true;
       }
     } else if (this.mode === "line") {
       if (this.drawingShape) {
-        // this.drawingShape.addPoint(this.mousePos);
         this.drawingShape = null;
         this.selected = undefined;
       } else {
@@ -306,16 +213,22 @@ class Application {
           [Math.random(), Math.random(), Math.random()],
           []
         );
-
-        line.addPoint(this.mousePos);
-        line.addPoint(this.mousePos);
-        this.shapeList.push(line);
         this.drawingShape = line;
-        this.selected = {
-          id: line.id,
-          shape: line,
-        };
+        addNewShape = true;
       }
+    }
+    if (
+      ["line", "square", "polygon"].includes(this.mode) &&
+      addNewShape &&
+      this.drawingShape
+    ) {
+      this.drawingShape.addPoint(this.mousePos);
+      this.drawingShape.addPoint(this.mousePos);
+      this.shapeList.push(this.drawingShape);
+      this.selected = {
+        id: this.drawingShape?.id,
+        shape: this.drawingShape,
+      };
     }
   }
 

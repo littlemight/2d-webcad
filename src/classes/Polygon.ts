@@ -31,7 +31,7 @@ class Polygon extends Shape {
     if (isSelectMode) {
       this.gl.uniform4fv(u_color, new Float32Array(idToRGBA(this.id)));
     } else {
-      this.gl.uniform3fv(u_color, new Float32Array([0.4, 0.4, 0]));
+      this.gl.uniform3fv(u_color, new Float32Array([0, 0, 0]));
     }
     this.gl.drawArrays(this.gl.LINE_LOOP, 0, arr.length / 2);
   }
