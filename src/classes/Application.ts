@@ -1,4 +1,4 @@
-import { createShader, rgbaToId } from "../utils/utils";
+import { createShader, rgbaToId, hexaToRGBA } from "../utils/utils";
 import Polygon from "./Polygon";
 import Rectangle from "./Rectangle";
 import Shape from "./Shape";
@@ -152,8 +152,19 @@ class Application {
 
     return selectProgram;
   }
-
+  changeSelectedColor() {
+    let temp_color = "#000000";
+    let temp_selectedColor = "#000000"
+    temp_color = document.getElementById("color")?.value;
+    temp_selectedColor = document.getElementById("border")?.value;
+    const color_arr = hexaToRGBA(temp_color);
+    const selcolor_arr = hexaToRGBA(temp_selectedColor)
+    this.selected?.shape.updateColor(color_arr, selcolor_arr);
+  }
   render() {
+    if ((this.selected) && (this.mode === "selecting")) {
+      this.changeSelectedColor();
+    }
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuf);
     this.gl.enable(this.gl.DEPTH_TEST);
 
@@ -165,6 +176,7 @@ class Application {
     this.gl.useProgram(this.selectProgram);
 
     this.selected?.shape.render(true, this.selectProgram);
+    
     for (const shape of this.shapeList) {
       if (shape.id === this.selected?.shape.id) {
         continue;
