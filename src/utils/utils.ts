@@ -30,3 +30,11 @@ export function createShader(
   gl.compileShader(shader);
   return shader;
 }
+
+export function hexaToRGBA(hexadec: string) {
+  const hexadec_r = hexadec[1] + hexadec[2];
+  const hexadec_g = hexadec[3] + hexadec[4];
+  const hexadec_b = hexadec[5] + hexadec[6];
+  const color_arr = [parseInt(hexadec_r,16)/255,parseInt(hexadec_g,16)/255,parseInt(hexadec_b,16)/255] as Color;
+  return color_arr;
+}
