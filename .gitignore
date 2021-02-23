@@ -175,3 +175,5 @@ package-lock.json
 # yarn.lock
 
 .parcel-cache/
+
+public/tailwind.css
