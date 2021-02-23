@@ -14,6 +14,7 @@ class Application {
   };
   pixelId?: number; // buat selecting
   mode: Mode = "selecting";
+  applyingColor: Boolean = false;
   selectProgram: WebGLProgram | null = null;
   frameBuf: WebGLFramebuffer | null = null;
   mousePos: Point = [0, 0];
@@ -152,17 +153,19 @@ class Application {
 
     return selectProgram;
   }
+
   changeSelectedColor() {
     let temp_color = "#000000";
-    let temp_selectedColor = "#000000"
+    let temp_selectedColor = "#000000";
     temp_color = document.getElementById("color")?.value;
     temp_selectedColor = document.getElementById("border")?.value;
     const color_arr = hexaToRGBA(temp_color);
-    const selcolor_arr = hexaToRGBA(temp_selectedColor)
+    const selcolor_arr = hexaToRGBA(temp_selectedColor);
     this.selected?.shape.updateColor(color_arr, selcolor_arr);
   }
+
   render() {
-    if ((this.selected) && (this.mode === "selecting")) {
+    if (this.selected && this.mode === "selecting" && this.applyingColor) {
       this.changeSelectedColor();
     }
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuf);
@@ -176,7 +179,7 @@ class Application {
     this.gl.useProgram(this.selectProgram);
 
     this.selected?.shape.render(true, this.selectProgram);
-    
+
     for (const shape of this.shapeList) {
       if (shape.id === this.selected?.shape.id) {
         continue;
@@ -275,7 +278,7 @@ class Application {
           [Math.random(), Math.random(), Math.random()]
         );
         poly.addPoint(this.mousePos);
-        // poly.addPoint(this.mousePos);
+        poly.addPoint(this.mousePos);
         this.shapeList.push(poly);
         this.drawingShape = poly;
         this.selected = {
@@ -305,7 +308,6 @@ class Application {
       }
     } else if (this.mode === "line") {
       if (this.drawingShape) {
-        // this.drawingShape.addPoint(this.mousePos);
         this.drawingShape = null;
         this.selected = undefined;
       } else {

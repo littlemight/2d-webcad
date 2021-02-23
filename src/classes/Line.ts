@@ -90,7 +90,7 @@ class Line extends Shape {
         else {
             this.gl.uniform3fv(
                 blockingColor,
-                new Float32Array([0.4, 0.4, 0])
+                new Float32Array([0, 0, 0])
             )
         }
         this.gl.drawArrays(this.gl.LINE_LOOP, 0, arr.length/2);

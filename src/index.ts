@@ -37,7 +37,7 @@ const squareBtn = document.getElementById("squareBtn") as HTMLButtonElement;
 const polygonBtn = document.getElementById("polygonBtn") as HTMLButtonElement;
 const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
 const colorBtn = document.getElementById("colorBtn") as HTMLButtonElement;
-const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn, colorBtn];
+const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn];
 selectBtn.disabled = true;
 selectBtn.onclick = () => {
   app.setMode("selecting");
@@ -71,16 +71,16 @@ polygonBtn.onclick = () => {
   polygonBtn.disabled = true;
 };
 
-saveBtn.onclick = () => {
-  
-}
+saveBtn.onclick = () => {};
+
 colorBtn.onclick = () => {
   // tambah ubah warna logic di Application.ts
-  // app.setMode("color")
-  for (const btn of btns) {
-    btn.disabled = false;
+  app.applyingColor = !app.applyingColor;
+  if (app.applyingColor) {
+    colorBtn.innerText = "Color (applying)";
+  } else {
+    colorBtn.innerText = "Color";
   }
-  colorBtn.disabled = true;
 };
 
 document.onkeyup = (e) => {
@@ -98,6 +98,9 @@ document.onkeyup = (e) => {
     case "4":
       const idx = parseInt(e.key) - 1;
       if (btns[idx]) btns[idx].onclick?.(new MouseEvent("")); // lolololol
+      break;
+    case "c":
+      colorBtn.onclick?.(new MouseEvent(""));
       break;
   }
 };
