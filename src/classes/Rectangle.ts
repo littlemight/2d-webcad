@@ -111,6 +111,7 @@ class Rectangle extends Shape {
             }
         }
     }
+    
     createAdditionalPoint() {
         if (this.points.length < 2) {
             return

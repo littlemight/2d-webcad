@@ -280,7 +280,7 @@ class Application {
           this.canvas,
           this.gl,
           [Math.random(), Math.random(), Math.random()],
-          [Math.random(), Math.random(), Math.random()],
+          [Math.random(), Math.random(), Math.random()]
         );
         rect.addPoint(this.mousePos);
         rect.addPoint(this.mousePos);
@@ -291,8 +291,7 @@ class Application {
           shape: rect,
         };
       }
-    }
-    else if (this.mode === "line") {
+    } else if (this.mode === "line") {
       if (this.drawingShape) {
         this.drawingShape.addPoint(this.mousePos);
       } else {

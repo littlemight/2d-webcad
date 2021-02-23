@@ -75,30 +75,9 @@ abstract class Shape {
   }
 
   onMouseMove(id: number, bef: Point, pos: Point) {
-    const vertexPos = this.gl.getAttribLocation(this.program, "a_pos");
-    const uniformProjPos = this.gl.getUniformLocation(
-      this.program,
-      "u_proj_mat"
-    );
-    this.gl.vertexAttribPointer(vertexPos, 2, this.gl.FLOAT, false, 0, 0);
-    this.gl.uniformMatrix3fv(uniformProjPos, false, [
-      1,
-      0,
-      0,
-      0,
-      1,
-      0,
-      pos[0] - bef[0],
-      pos[1] - bef[1],
-      1,
-    ]);
-    this.gl.enableVertexAttribArray(vertexPos);
-
     const dx = pos[0] - bef[0];
     const dy = pos[1] - bef[1];
     this.gl.drawArrays(this.gl.TRIANGLE_FAN, 0, this.points.length / 2);
-    // this.gl.uniformMatrix3fv()
-    // this.gl.uniform4fv()
     if (id === this.id) {
       for (let i = 0; i < this.points.length; ++i) {
         this.points[i].pos[0] += dx;
@@ -106,6 +85,7 @@ abstract class Shape {
       }
     } else {
       const i = this.points.findIndex((v) => v.id === id);
+      console.log(this.points);
       if (i >= 0 && i < this.points.length) {
         this.points[i].pos = [
           this.points[i].pos[0] + dx,
@@ -127,6 +107,7 @@ abstract class Shape {
   }
 
   abstract render(selected: boolean, program: WebGLProgram | null): void;
+  abstract toJSON(): string;
 
   // TO DO:
   // array of json buat save sama load:
