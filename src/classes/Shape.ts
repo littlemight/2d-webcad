@@ -85,7 +85,6 @@ abstract class Shape {
       }
     } else {
       const i = this.points.findIndex((v) => v.id === id);
-      console.log(this.points);
       if (i >= 0 && i < this.points.length) {
         this.points[i].pos = [
           this.points[i].pos[0] + dx,
@@ -107,7 +106,13 @@ abstract class Shape {
   }
 
   abstract render(selected: boolean, program: WebGLProgram | null): void;
-  abstract toJSON(): string;
+  abstract toSaveData(): {
+    type: ShapeType;
+    id: number;
+    color: Color;
+    selectedColor: Color;
+    points: { id: number; pos: Point }[];
+  };
 
   // TO DO:
   // array of json buat save sama load:

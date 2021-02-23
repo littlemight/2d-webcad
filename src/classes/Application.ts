@@ -319,6 +319,7 @@ class Application {
     if (this.mode != "square") {
       this.drawingShape?.points.pop();
     }
+    if (!this.drawingShape) return;
     this.drawingShape = null;
     this.selected = undefined;
   }
