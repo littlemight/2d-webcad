@@ -170,6 +170,18 @@ class Rectangle extends Shape {
 
         this.gl.drawArrays(this.gl.TRIANGLE_FAN, 0, arr.length / 2);
     }
+
+    toSaveData() {
+        return {
+            type: "square" as ShapeType,
+            id: this.id,
+            color: this.color,
+            selectedColor: this.selectedColor,
+            points:this.points
+        };    
+
+    }
+      
 }
 
 export default Rectangle;
