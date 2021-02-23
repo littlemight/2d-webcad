@@ -107,6 +107,7 @@ class Rectangle extends Shape {
             });
         }
     }
+    
     createAdditionalPoint() {
         while (this.rectPoints.length != 0) {
             this.rectPoints.pop();

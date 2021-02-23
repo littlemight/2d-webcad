@@ -19,10 +19,6 @@ const getCanvasPos = (e: MouseEvent): Point => {
   ];
 };
 
-canvas.ondblclick = (e) => {
-  app.onMouseDblClick(getCanvasPos(e));
-};
-
 canvas.onmousedown = (e) => {
   app.onMouseDown(getCanvasPos(e));
 };
@@ -91,13 +87,6 @@ document.onkeyup = (e) => {
       break;
   }
 };
-
-const poly = new Polygon(canvas, gl, [1, 0, 0], [0, 1, 0]);
-poly.addPoint([-0.5, 0]);
-poly.addPoint([0, -0.5]);
-poly.addPoint([0.5, 0]);
-poly.addPoint([0, 0.5]);
-app.shapeList.push(poly);
 
 const render = () => {
   app.render();
