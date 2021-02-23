@@ -19,7 +19,7 @@ class Rectangle extends Shape {
         }
         this.gl.useProgram(program);
 
-        const arr = this.points.map((v) => v.pos).flat();
+        const arr = this.rectPoints.map((v) => v.pos).flat();
 
         const posBuf = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
@@ -111,8 +111,8 @@ class Rectangle extends Shape {
         while (this.rectPoints.length != 0) {
             this.rectPoints.pop();
         }
-        if ((this.points[0].pos[0] == this.points[1].pos[0]) || (this.points[0].pos[1] == this.points[1].pos[1])) {
-
+        if (this.points.length < 2) {
+            return
         }
         else {
             this.addRectPoint(this.points[0].pos, this.points[0].id);

@@ -277,11 +277,11 @@ class Application {
         this.drawingShape = null;
         this.selected = undefined;
       } else {
-        const rect = new Rectangle (
+        const rect = new Rectangle(
           this.canvas,
           this.gl,
-          [Math.random(),Math.random(),Math.random()],
-          [Math.random(),Math.random(),Math.random()],
+          [Math.random(), Math.random(), Math.random()],
+          [Math.random(), Math.random(), Math.random()],
         );
         rect.addPoint(this.mousePos);
         rect.addPoint(this.mousePos);
@@ -318,7 +318,9 @@ class Application {
   }
 
   onEscKey() {
-    this.drawingShape?.points.pop();
+    if (this.mode != "square") {
+      this.drawingShape?.points.pop();
+    }
     this.drawingShape = null;
     this.selected = undefined;
   }
