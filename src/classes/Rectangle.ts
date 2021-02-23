@@ -1,8 +1,17 @@
 import Shape from "./Shape";
-import { idToRGBA } from "../utils/utils";
+import { createId, idToRGBA } from "../utils/utils";
 
 class Rectangle extends Shape {
-
+    rectPoints: { id: number; pos: Point }[];
+    constructor(
+        canvas: HTMLCanvasElement,
+        gl: WebGL2RenderingContext,
+        color: Color,
+        selectedColor: Color,
+    ) {
+        super(canvas, gl, color, selectedColor);
+        this.rectPoints = [];
+    }
     renderBorderSelected(program: WebGLProgram | null) {
         const isSelectMode = program !== null;
         if (!program) {
@@ -43,24 +52,25 @@ class Rectangle extends Shape {
             program = this.program;
         }
         this.gl.useProgram(program);
-        let arr1 = this.createAdditionalPoint().flat();
-        let arr = [];
-        for (let i = 0; i < arr1.length; i += 2) {
-            arr.push([
-                arr1[i] + 0.015,
-                arr1[i+1]+0.015,
-                arr1[i] - 0.015,
-                arr1[i+1]+0.015,
-                arr1[i] + 0.015,
-                arr1[i+1]-0.015,
-                arr1[i] - 0.015,
-                arr1[i+1]-0.015,
-            ]) 
-        }
-        arr = arr.flat();
+        const arr = this.rectPoints
+            .map((v) => v.pos)
+            .map((v) => {
+                return [
+                    v[0] + 0.015,
+                    v[1] + 0.015,
+                    v[0] - 0.015,
+                    v[1] + 0.015,
+                    v[0] + 0.015,
+                    v[1] - 0.015,
+                    v[0] - 0.015,
+                    v[1] - 0.015,
+                ];
+            })
+            .flat();
 
         const posBuf = this.gl.createBuffer();
         const a_pos = this.gl.getAttribLocation(program, "a_pos");
+        console.log(a_pos);
         this.gl.enableVertexAttribArray(a_pos);
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
         this.gl.vertexAttribPointer(a_pos, 2, this.gl.FLOAT, false, 0, 0);
@@ -71,11 +81,11 @@ class Rectangle extends Shape {
         );
 
         const u_color = this.gl.getUniformLocation(program, "u_color");
-        for (let i = 0; i < this.points.length; ++i) {
+        for (let i = 0; i < this.rectPoints.length; ++i) {
             if (isSelectMode) {
                 this.gl.uniform4fv(
                     u_color,
-                    new Float32Array(idToRGBA(this.points[i].id))
+                    new Float32Array(idToRGBA(this.rectPoints[i].id))
                 );
             } else {
                 this.gl.uniform3fv(u_color, new Float32Array(this.selectedColor));
@@ -83,12 +93,29 @@ class Rectangle extends Shape {
             this.gl.drawArrays(this.gl.TRIANGLE_STRIP, i * 4, 4);
         }
     }
+
+    addRectPoint(point: Point, _id: number | null) {
+        if (_id) {
+            this.rectPoints.push({
+                id: _id,
+                pos: point,
+            });
+        } else {
+            this.rectPoints.push({
+                id: createId(),
+                pos: point,
+            });
+        }
+    }
     createAdditionalPoint() {
-        let add_point = [];
+        while (this.rectPoints.length != 0) {
+            this.rectPoints.pop();
+        }
         if ((this.points[0].pos[0] == this.points[1].pos[0]) || (this.points[0].pos[1] == this.points[1].pos[1])) {
 
         }
         else {
+            this.addRectPoint(this.points[0].pos, this.points[0].id);
             const temp_1 = Math.abs(this.points[1].pos[0] - this.points[0].pos[0])
             const temp_2 = Math.abs(this.points[1].pos[1] - this.points[0].pos[1])
             let dif1 = (this.points[1].pos[0] - this.points[0].pos[0]) < 0 ? -1 : 1;
@@ -100,25 +127,24 @@ class Rectangle extends Shape {
             else {
                 delta = temp_2;
             }
-            add_point.push(this.points[0].pos);
-            add_point.push(this.points[0].pos[0] + (delta * dif1),this.points[0].pos[1]);
-            add_point.push(this.points[0].pos[0] + (delta * dif1),this.points[0].pos[1] + (delta * dif2));
-            add_point.push(this.points[0].pos[0],this.points[0].pos[1] + (delta * dif2));
+            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1]], null);
+            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1] + (delta * dif2)], null);
+            this.addRectPoint([this.points[0].pos[0], this.points[0].pos[1] + (delta * dif2)], null)
         }
-        return add_point;
     }
+
     render(selected: boolean, program: WebGLProgram | null) {
         const isSelectMode = program !== null;
+        this.createAdditionalPoint();
         if (!program) {
             program = this.program;
         }
         if (selected) {
-              this.renderPointSelected(isSelectMode ? program : null);
-              this.renderBorderSelected(isSelectMode ? program : null);
+            this.renderPointSelected(isSelectMode ? program : null);
+            this.renderBorderSelected(isSelectMode ? program : null);
         }
         this.gl.useProgram(program);
-        const temp_point = this.createAdditionalPoint();
-        const arr = temp_point.flat();
+        const arr = this.rectPoints.map((v) => v.pos).flat();
 
         const posBuf = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
