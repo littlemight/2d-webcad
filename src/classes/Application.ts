@@ -273,7 +273,6 @@ class Application {
       }
     } else if (this.mode === "square") {
       if (this.drawingShape) {
-        this.drawingShape.addPoint(this.mousePos);
         this.drawingShape = null;
         this.selected = undefined;
       } else {
