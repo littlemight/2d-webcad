@@ -94,22 +94,15 @@ class Rectangle extends Shape {
     }
 
     addRectPoint(point: Point, _id: number | null, index: number) {
-        if (_id) {
-            this.rectPoints.push({
-                id: _id,
-                pos: point,
-            });
-        } else {
             if (this.rectPoints.length > index) {
                 this.rectPoints[index].pos = point;
             }
             else {
                 this.rectPoints.push({
-                    id: createId(),
+                    id: (_id?_id:createId()),
                     pos: point,
                 });
             }
-        }
     }
     
     createAdditionalPoint() {
