@@ -14,14 +14,15 @@ abstract class Shape {
     canvas: HTMLCanvasElement,
     gl: WebGL2RenderingContext,
     color: Color,
-    selectedColor: Color
+    selectedColor: Color,
+    points: {id: number; pos: Point}[]
   ) {
     this.canvas = canvas;
     this.gl = gl;
     this.program = this.createShaderProgram();
     this.color = color;
     this.selectedColor = selectedColor;
-    this.points = [];
+    this.points = points;
   }
 
   createShaderProgram() {

@@ -190,6 +190,7 @@ class Application {
     this.selected?.shape.render(true, null);
     for (const shape of this.shapeList) {
       if (shape.id === this.selected?.shape.id) {
+        console.log("test");
         continue;
       }
       shape.render(false, null);
@@ -260,7 +261,8 @@ class Application {
           this.canvas,
           this.gl,
           [Math.random(), Math.random(), Math.random()],
-          [Math.random(), Math.random(), Math.random()]
+          [Math.random(), Math.random(), Math.random()],
+          []
         );
         poly.addPoint(this.mousePos);
         // poly.addPoint(this.mousePos);
@@ -280,7 +282,7 @@ class Application {
           this.canvas,
           this.gl,
           [Math.random(), Math.random(), Math.random()],
-          [Math.random(), Math.random(), Math.random()]
+          [Math.random(), Math.random(), Math.random()],
         );
         rect.addPoint(this.mousePos);
         rect.addPoint(this.mousePos);
@@ -301,7 +303,8 @@ class Application {
           this.canvas,
           this.gl,
           [Math.random(), Math.random(), Math.random()],
-          [Math.random(), Math.random(), Math.random()]
+          [Math.random(), Math.random(), Math.random()],
+          []
         );
 
         line.addPoint(this.mousePos);
@@ -325,6 +328,10 @@ class Application {
       this.drawingShape?.points.pop();
     }
     if (!this.drawingShape) return;
+    // let str = JSON.stringify(this.drawingShape.toSaveData());
+    // console.log(this.drawingShape.toSaveData());
+    // console.log(JSON.stringify(this.drawingShape.toSaveData()));
+    // console.log(JSON.parse(str));
     this.drawingShape = null;
     this.selected = undefined;
   }
@@ -338,6 +345,41 @@ class Application {
       this.shapeList.splice(idx, 1);
       this.selected = undefined;
     }
+  }
+
+  save(el:any) {
+    let str = "" as string;
+    let arr = [] as any;
+    this.shapeList.forEach(element => {
+      arr.push(element.toSaveData());
+    });
+    str = JSON.stringify(arr);
+    console.log(JSON.parse(str));
+    var data = "text/json;charset=utf-8," + encodeURIComponent(str);
+    el.setAttribute("href", "data:"+data);
+    el.setAttribute("download", "data.json");  
+  }
+
+  load(res:any)  {
+    let arr: Shape[] = [];
+    res.forEach(element => {
+      if (element.type === "line") {
+        var line = new Line(this.canvas,this.gl,res.color,res.selectedColor,res.points);
+        line.id = res.id;
+        arr.push(line)
+      }
+      else if (element.type === "square") {
+        var rect = new Rectangle(this.canvas,this.gl,res.color,res.selectedColor);
+        rect.id = res.id;
+        arr.push(rect)
+      }
+      else if (element.type === "polygon") {
+        var poly = new Polygon(this.canvas,this.gl,res.color,res.selectedColor,res.points);
+        poly.id = res.id;
+        arr.push(poly)
+      }
+    });
+    this.shapeList = arr;
   }
 }
 

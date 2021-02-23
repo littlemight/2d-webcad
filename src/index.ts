@@ -37,7 +37,10 @@ const squareBtn = document.getElementById("squareBtn") as HTMLButtonElement;
 const polygonBtn = document.getElementById("polygonBtn") as HTMLButtonElement;
 const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
 const colorBtn = document.getElementById("colorBtn") as HTMLButtonElement;
-const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn, colorBtn];
+const loadBtn = document.getElementById("loadBtn") as HTMLButtonElement;
+const fileSelector = document.getElementById("fileSelect") as HTMLInputElement;
+
+const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, colorBtn];
 selectBtn.disabled = true;
 selectBtn.onclick = () => {
   app.setMode("selecting");
@@ -72,8 +75,20 @@ polygonBtn.onclick = () => {
 };
 
 saveBtn.onclick = () => {
-  
+  app.save(saveBtn);
 }
+
+loadBtn.onclick = () => {
+  var files = fileSelector.files;
+  var fr = new FileReader();
+  fr.readAsText(files.item(0));
+  fr.onload = (e) => {
+      var res = JSON.parse(e.target.result);
+      app.load(res);
+  }
+}
+
+
 colorBtn.onclick = () => {
   // tambah ubah warna logic di Application.ts
   for (const btn of btns) {
