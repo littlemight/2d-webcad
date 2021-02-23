@@ -108,7 +108,6 @@ class Polygon extends Shape {
 
     const a_pos = this.gl.getAttribLocation(program, "a_pos");
     this.gl.enableVertexAttribArray(a_pos);
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
     this.gl.vertexAttribPointer(a_pos, 2, this.gl.FLOAT, false, 0, 0);
 
     const u_color = this.gl.getUniformLocation(program, "u_color");
