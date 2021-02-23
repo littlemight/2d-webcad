@@ -57,8 +57,12 @@ class Application {
   changeSelectedColor() {
     let temp_color = "#000000";
     let temp_selectedColor = "#000000";
-    temp_color = document.getElementById("color")?.value;
-    temp_selectedColor = document.getElementById("border")?.value;
+
+    const color = document.getElementById("color") as HTMLInputElement;
+    const border = document.getElementById("border") as HTMLInputElement;
+
+    temp_color = color.value;
+    temp_selectedColor = border.value;
     const color_arr = hexaToRGBA(temp_color);
     const selcolor_arr = hexaToRGBA(temp_selectedColor);
     this.selected?.shape.updateColor(color_arr, selcolor_arr);
