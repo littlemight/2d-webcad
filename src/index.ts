@@ -36,7 +36,8 @@ const lineBtn = document.getElementById("lineBtn") as HTMLButtonElement;
 const squareBtn = document.getElementById("squareBtn") as HTMLButtonElement;
 const polygonBtn = document.getElementById("polygonBtn") as HTMLButtonElement;
 const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
-const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn];
+const colorBtn = document.getElementById("colorBtn") as HTMLButtonElement;
+const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn, colorBtn];
 selectBtn.disabled = true;
 selectBtn.onclick = () => {
   app.setMode("selecting");
@@ -73,6 +74,13 @@ polygonBtn.onclick = () => {
 saveBtn.onclick = () => {
   
 }
+colorBtn.onclick = () => {
+  // tambah ubah warna logic di Application.ts
+  for (const btn of btns) {
+    btn.disabled = false;
+  }
+  colorBtn.disabled = true;
+};
 
 document.onkeyup = (e) => {
   switch (e.key) {

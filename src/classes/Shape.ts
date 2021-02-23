@@ -105,6 +105,11 @@ abstract class Shape {
     };
   }
 
+  updateColor(color: Color, selectedColor: Color) {
+    this.color = color;
+    this.selectedColor = selectedColor;
+  }
+
   abstract render(selected: boolean, program: WebGLProgram | null): void;
   abstract toSaveData(): {
     type: ShapeType;
