@@ -1,5 +1,6 @@
 import { createShader, rgbaToId } from "../utils/utils";
 import Polygon from "./Polygon";
+import Rectangle from "./Rectangle";
 import Shape from "./Shape";
 import Line from "./Line";
 
@@ -270,7 +271,29 @@ class Application {
           shape: poly,
         };
       }
-    } else if (this.mode === "line") {
+    } else if (this.mode === "square") {
+      if (this.drawingShape) {
+        this.drawingShape.addPoint(this.mousePos);
+        this.drawingShape = null;
+        this.selected = undefined;
+      } else {
+        const rect = new Rectangle (
+          this.canvas,
+          this.gl,
+          [Math.random(),Math.random(),Math.random()],
+          [Math.random(),Math.random(),Math.random()],
+        );
+        rect.addPoint(this.mousePos);
+        rect.addPoint(this.mousePos);
+        this.shapeList.push(rect);
+        this.drawingShape = rect;
+        this.selected = {
+          id: rect.id,
+          shape: rect,
+        };
+      }
+    }
+    else if (this.mode === "line") {
       if (this.drawingShape) {
         this.drawingShape.addPoint(this.mousePos);
       } else {
