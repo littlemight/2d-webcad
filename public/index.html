@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="./tailwind.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body class="">
     <div id="js-main" class="main">
       <div class="">
-        <h1 class="text-4xl">CACAD</h1>
-        <p>Completely Amateur Computer Aided Design</p>
+        <h1 class="text-4xl px-3 pt-3">CACAD</h1>
+        <p class="px-3">Completely Amateur Computer Aided Design</p>
       </div>
-      <div class="header w-full">
+      <div class="header w-full px-3">
         <button id="selectBtn" class="btn btn-blue">Select</button>
         <button id="lineBtn" class="btn btn-blue">Line</button>
         <button id="squareBtn" class="btn btn-blue">Square</button>
@@ -28,10 +28,15 @@
         <input type="color" id="border" value="#ffffff" />
         <label for="head">Border</label>
       </div>
-      <div style="border-width: 2; border-color: black">
+      <div class="px-3" style="border-width: 2; border-color: black">
         <p>Mouse: <span id="mouse-pos"></span></p>
         <p>Canvas: <span id="canvas-pos"></span></p>
-        <canvas id="gl-display" width="1200" height="1200"></canvas>
+        <div class="flex justify-center mt-3">
+          <canvas id="gl-display" width="1200" height="1200"></canvas>
+        </div>
+      </div>
+      <div class="text-center p-6 text-base">
+        All rights reserved
       </div>
     </div>
     <script src="../src/index.ts" defer></script>
