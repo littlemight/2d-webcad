@@ -72,6 +72,7 @@ polygonBtn.onclick = () => {
 
 colorBtn.onclick = () => {
   // tambah ubah warna logic di Application.ts
+  // app.setMode("color")
   for (const btn of btns) {
     btn.disabled = false;
   }
