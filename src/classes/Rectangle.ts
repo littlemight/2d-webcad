@@ -43,21 +43,21 @@ class Rectangle extends Shape {
             program = this.program;
         }
         this.gl.useProgram(program);
-        const arr = this.points
-            .map((v) => v.pos)
-            .map((v) => {
-                return [
-                    v[0] + 0.015,
-                    v[1] + 0.015,
-                    v[0] - 0.015,
-                    v[1] + 0.015,
-                    v[0] + 0.015,
-                    v[1] - 0.015,
-                    v[0] - 0.015,
-                    v[1] - 0.015,
-                ];
-            })
-            .flat();
+        let arr1 = this.createAdditionalPoint().flat();
+        let arr = [];
+        for (let i = 0; i < arr1.length; i += 2) {
+            arr.push([
+                arr1[i] + 0.015,
+                arr1[i+1]+0.015,
+                arr1[i] - 0.015,
+                arr1[i+1]+0.015,
+                arr1[i] + 0.015,
+                arr1[i+1]-0.015,
+                arr1[i] - 0.015,
+                arr1[i+1]-0.015,
+            ]) 
+        }
+        arr = arr.flat();
 
         const posBuf = this.gl.createBuffer();
         const a_pos = this.gl.getAttribLocation(program, "a_pos");
@@ -89,10 +89,21 @@ class Rectangle extends Shape {
 
         }
         else {
+            const temp_1 = Math.abs(this.points[1].pos[0] - this.points[0].pos[0])
+            const temp_2 = Math.abs(this.points[1].pos[1] - this.points[0].pos[1])
+            let dif1 = (this.points[1].pos[0] - this.points[0].pos[0]) < 0 ? -1 : 1;
+            let dif2 = (this.points[1].pos[1] - this.points[0].pos[1]) < 0 ? -1 : 1;
+            let delta = 0;
+            if (temp_1 < temp_2) {
+                delta = temp_1;
+            }
+            else {
+                delta = temp_2;
+            }
             add_point.push(this.points[0].pos);
-            add_point.push(this.points[0].pos[0], this.points[1].pos[1]);
-            add_point.push(this.points[1].pos);
-            add_point.push(this.points[1].pos[0], this.points[0].pos[1]);
+            add_point.push(this.points[0].pos[0] + (delta * dif1),this.points[0].pos[1]);
+            add_point.push(this.points[0].pos[0] + (delta * dif1),this.points[0].pos[1] + (delta * dif2));
+            add_point.push(this.points[0].pos[0],this.points[0].pos[1] + (delta * dif2));
         }
         return add_point;
     }
