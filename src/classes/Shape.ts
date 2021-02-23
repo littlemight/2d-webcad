@@ -4,10 +4,12 @@ abstract class Shape {
   program: WebGLProgram;
   canvas: HTMLCanvasElement;
   gl: WebGL2RenderingContext;
+  // Info JSON
   color: Color;
   selectedColor: Color;
   points: { id: number; pos: Point }[];
   id: number = createId();
+  // End of Info JSON
   constructor(
     canvas: HTMLCanvasElement,
     gl: WebGL2RenderingContext,
@@ -35,6 +37,8 @@ abstract class Shape {
         `
           precision mediump float;
           attribute vec2 a_pos;
+          uniform mat3 u_proj_mat;
+
           void main() {
             gl_Position = vec4(a_pos, 0, 1);
           }
@@ -71,8 +75,30 @@ abstract class Shape {
   }
 
   onMouseMove(id: number, bef: Point, pos: Point) {
+    const vertexPos = this.gl.getAttribLocation(this.program, "a_pos");
+    const uniformProjPos = this.gl.getUniformLocation(
+      this.program,
+      "u_proj_mat"
+    );
+    this.gl.vertexAttribPointer(vertexPos, 2, this.gl.FLOAT, false, 0, 0);
+    this.gl.uniformMatrix3fv(uniformProjPos, false, [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      pos[0] - bef[0],
+      pos[1] - bef[1],
+      1,
+    ]);
+    this.gl.enableVertexAttribArray(vertexPos);
+
     const dx = pos[0] - bef[0];
     const dy = pos[1] - bef[1];
+    this.gl.drawArrays(this.gl.TRIANGLE_FAN, 0, this.points.length / 2);
+    // this.gl.uniformMatrix3fv()
+    // this.gl.uniform4fv()
     if (id === this.id) {
       for (let i = 0; i < this.points.length; ++i) {
         this.points[i].pos[0] += dx;

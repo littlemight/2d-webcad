@@ -11,7 +11,7 @@ class Application {
     id: number;
     shape: Shape;
   };
-  pixelId?: number;
+  pixelId?: number; // buat selecting
   mode: Mode = "selecting";
   selectProgram: WebGLProgram | null = null;
   frameBuf: WebGLFramebuffer | null = null;
@@ -159,28 +159,33 @@ class Application {
     this.gl.clearColor(1, 1, 1, 1);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-    if (this.selectProgram) {
-      this.gl.useProgram(this.selectProgram);
+    // !Hacky code
+    // render hitbox (used for identifying selected shape)
+    this.gl.useProgram(this.selectProgram);
 
-      this.selected?.shape.render(true, this.selectProgram);
-      for (const shape of this.shapeList) {
-        if (shape.id === this.selected?.shape.id) {
-          continue;
-        }
-        shape.render(false, this.selectProgram);
+    this.selected?.shape.render(true, this.selectProgram);
+    for (const shape of this.shapeList) {
+      if (shape.id === this.selected?.shape.id) {
+        continue;
       }
+      shape.render(false, this.selectProgram);
     }
 
+    // id = 1, 2, 3
+    // RGBA = 0x(FF)(FF)(FF)(FF)
     const x = ((this.mousePos[0] + 1) / 2) * this.canvas.width;
     const y = ((this.mousePos[1] + 1) / 2) * this.canvas.height;
     const rgba = new Uint8Array(4);
+    // detect di titik x,y. warnanya apa. trus disimpen di array rgba
     this.gl.readPixels(x, y, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, rgba);
     this.pixelId = rgbaToId([rgba[0], rgba[1], rgba[2], rgba[3]]);
 
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
     this.gl.clearColor(1, 1, 1, 1);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+    // !Clear canvas so hitbox doesnt show
 
+    // Kode yang gambar bentuk dibawah ini
     this.selected?.shape.render(true, null);
     for (const shape of this.shapeList) {
       if (shape.id === this.selected?.shape.id) {
@@ -265,12 +270,10 @@ class Application {
           shape: poly,
         };
       }
-    }
-    else if (this.mode === "line") {
+    } else if (this.mode === "line") {
       if (this.drawingShape) {
         this.drawingShape.addPoint(this.mousePos);
-      }
-      else {
+      } else {
         const line = new Line(
           this.canvas,
           this.gl,
@@ -292,6 +295,7 @@ class Application {
   }
 
   onEscKey() {
+    this.drawingShape?.points.pop();
     this.drawingShape = null;
     this.selected = undefined;
   }

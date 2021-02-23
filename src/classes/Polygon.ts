@@ -83,8 +83,10 @@ class Polygon extends Shape {
     }
   }
 
+  // selected = render outline
+  // isSelectMode = render hitbox (box collider)
   render(selected: boolean, program: WebGLProgram | null) {
-    const isSelectMode = program !== null;
+    const isSelectMode = program !== null; // artinya mau render box collider
     if (!program) {
       program = this.program;
     }
