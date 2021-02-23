@@ -174,4 +174,4 @@ crashlytics-build.properties
 package-lock.json
 # yarn.lock
 
-/.parcel-cache/
+.parcel-cache/
