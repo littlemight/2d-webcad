@@ -35,7 +35,8 @@ const selectBtn = document.getElementById("selectBtn") as HTMLButtonElement;
 const lineBtn = document.getElementById("lineBtn") as HTMLButtonElement;
 const squareBtn = document.getElementById("squareBtn") as HTMLButtonElement;
 const polygonBtn = document.getElementById("polygonBtn") as HTMLButtonElement;
-const btns = [selectBtn, lineBtn, squareBtn, polygonBtn];
+const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
+const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn];
 selectBtn.disabled = true;
 selectBtn.onclick = () => {
   app.setMode("selecting");
@@ -68,6 +69,10 @@ polygonBtn.onclick = () => {
   }
   polygonBtn.disabled = true;
 };
+
+saveBtn.onclick = () => {
+  
+}
 
 document.onkeyup = (e) => {
   switch (e.key) {

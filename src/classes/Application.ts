@@ -263,7 +263,7 @@ class Application {
           [Math.random(), Math.random(), Math.random()]
         );
         poly.addPoint(this.mousePos);
-        poly.addPoint(this.mousePos);
+        // poly.addPoint(this.mousePos);
         this.shapeList.push(poly);
         this.drawingShape = poly;
         this.selected = {
@@ -293,7 +293,9 @@ class Application {
       }
     } else if (this.mode === "line") {
       if (this.drawingShape) {
-        this.drawingShape.addPoint(this.mousePos);
+        // this.drawingShape.addPoint(this.mousePos);
+        this.drawingShape = null;
+        this.selected = undefined;
       } else {
         const line = new Line(
           this.canvas,
@@ -301,8 +303,11 @@ class Application {
           [Math.random(), Math.random(), Math.random()],
           [Math.random(), Math.random(), Math.random()]
         );
+
+        line.addPoint(this.mousePos);
         line.addPoint(this.mousePos);
         this.shapeList.push(line);
+        this.drawingShape = line;
         this.selected = {
           id: line.id,
           shape: line,

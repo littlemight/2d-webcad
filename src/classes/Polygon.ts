@@ -24,7 +24,7 @@ class Polygon extends Shape {
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
     this.gl.vertexAttribPointer(a_pos, 2, this.gl.FLOAT, false, 0, 0);
 
-    this.gl.lineWidth(6);
+    this.gl.lineWidth(10);
 
     const u_color = this.gl.getUniformLocation(program, "u_color");
 
