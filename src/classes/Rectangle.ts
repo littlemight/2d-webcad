@@ -70,7 +70,6 @@ class Rectangle extends Shape {
 
         const posBuf = this.gl.createBuffer();
         const a_pos = this.gl.getAttribLocation(program, "a_pos");
-        console.log(a_pos);
         this.gl.enableVertexAttribArray(a_pos);
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, posBuf);
         this.gl.vertexAttribPointer(a_pos, 2, this.gl.FLOAT, false, 0, 0);
@@ -94,29 +93,30 @@ class Rectangle extends Shape {
         }
     }
 
-    addRectPoint(point: Point, _id: number | null) {
+    addRectPoint(point: Point, _id: number | null, index: number) {
         if (_id) {
             this.rectPoints.push({
                 id: _id,
                 pos: point,
             });
         } else {
-            this.rectPoints.push({
-                id: createId(),
-                pos: point,
-            });
+            if (this.rectPoints.length > index) {
+                this.rectPoints[index].pos = point;
+            }
+            else {
+                this.rectPoints.push({
+                    id: createId(),
+                    pos: point,
+                });
+            }
         }
     }
     
     createAdditionalPoint() {
-        while (this.rectPoints.length != 0) {
-            this.rectPoints.pop();
-        }
         if (this.points.length < 2) {
             return
         }
         else {
-            this.addRectPoint(this.points[0].pos, this.points[0].id);
             const temp_1 = Math.abs(this.points[1].pos[0] - this.points[0].pos[0])
             const temp_2 = Math.abs(this.points[1].pos[1] - this.points[0].pos[1])
             let dif1 = (this.points[1].pos[0] - this.points[0].pos[0]) < 0 ? -1 : 1;
@@ -128,9 +128,10 @@ class Rectangle extends Shape {
             else {
                 delta = temp_2;
             }
-            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1]], null);
-            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1] + (delta * dif2)], null);
-            this.addRectPoint([this.points[0].pos[0], this.points[0].pos[1] + (delta * dif2)], null)
+            this.addRectPoint(this.points[0].pos, this.points[0].id, 0);
+            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1]], null, 1);
+            this.addRectPoint([this.points[0].pos[0] + (delta * dif1), this.points[0].pos[1] + (delta * dif2)], null, 2);
+            this.addRectPoint([this.points[0].pos[0], this.points[0].pos[1] + (delta * dif2)], null, 3)
         }
     }
 
