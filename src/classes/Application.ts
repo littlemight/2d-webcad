@@ -304,7 +304,13 @@ class Application {
 
     var idArr = this.shapeList.map((v) => v.id)
     var sortedArr = idArr.sort((a,b) => b-a);
-    setInitId(sortedArr[0]);
+    var maxIDShape = this.shapeList.findIndex((shape) => {
+      return shape.id === sortedArr[0];
+    });
+    var finalMax = this.shapeList[maxIDShape].points
+      .map((v) => v.id)
+      .sort((a,b) => b-a)[0];
+    setInitId(finalMax);
   }
 }
 
