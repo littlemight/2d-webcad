@@ -197,6 +197,7 @@ class Application {
           this.gl,
           [Math.random(), Math.random(), Math.random()],
           [Math.random(), Math.random(), Math.random()],
+          []
         );
         this.drawingShape = rect;
         addNewShape = true;
@@ -282,7 +283,7 @@ class Application {
         arr.push(line)
       }
       else if (element.type === "square") {
-        var rect = new Rectangle(this.canvas,this.gl,res.color,res.selectedColor);
+        var rect = new Rectangle(this.canvas,this.gl,res.color,res.selectedColor, res.points);
         rect.id = res.id;
         arr.push(rect)
       }

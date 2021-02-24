@@ -7,9 +7,10 @@ class Rectangle extends Shape {
         canvas: HTMLCanvasElement,
         gl: WebGL2RenderingContext,
         color: Color,
-        selectedColor: Color
+        selectedColor: Color,
+        points: {id: number; pos: Point}[]
     ) {
-        super(canvas, gl, color, selectedColor,[]);
+        super(canvas, gl, color, selectedColor,points);
         this.rectPoints = [];
     }
     renderBorderSelected(program: WebGLProgram | null) {
