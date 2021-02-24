@@ -203,7 +203,9 @@ export function elementChooser(index: number) {
     "<p>Menyimpan data:" +
     "<ul class='list-inside list-decimal'>" +
     "<li>Klik tombol Save pada header</li>" +
-    "<li>Data objek akan tersimpan di dalam file yang diunduh</li>" +
+    "<li>Data objek akan tersimpan di dalam file berbentuk .json yang siap diunduh.</li>" +
+    "<li>Akan muncul prompt untuk memilih akan disimpan di folder mana, lalu ganti nama file jika ingin mengganti (default: data.json).</li>" +
+    "<li>Lalu, klik Save.</li>" +
     "</ul>" +
     "</p>",
     "<p>Me-load data:" +
