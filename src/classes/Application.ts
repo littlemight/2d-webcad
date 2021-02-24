@@ -109,7 +109,7 @@ class Application {
     this.selected?.shape.render(true, null);
     for (const shape of this.shapeList) {
       if (shape.id === this.selected?.shape.id) {
-        console.log("test");
+        // console.log("test");
         continue;
       }
       shape.render(false, null);
@@ -242,10 +242,10 @@ class Application {
       this.drawingShape?.points.pop();
     }
     if (!this.drawingShape) return;
-    // let str = JSON.stringify(this.drawingShape.toSaveData());
-    // console.log(this.drawingShape.toSaveData());
-    // console.log(JSON.stringify(this.drawingShape.toSaveData()));
-    // console.log(JSON.parse(str));
+    let str = JSON.stringify(this.drawingShape.toSaveData());
+    console.log(this.drawingShape.toSaveData());
+    console.log(JSON.stringify(this.drawingShape.toSaveData()));
+    console.log(JSON.parse(str));
     this.drawingShape = null;
     this.selected = undefined;
   }
@@ -276,24 +276,28 @@ class Application {
 
   load(res:any)  {
     let arr: Shape[] = [];
+    console.log(res);
     res.forEach(element => {
+      console.log(element);
+
       if (element.type === "line") {
-        var line = new Line(this.canvas,this.gl,res.color,res.selectedColor,res.points);
-        line.id = res.id;
+        var line = new Line(this.canvas,this.gl,element.color,element.selectedColor,element.points);
+        line.id = element.id;
         arr.push(line)
       }
       else if (element.type === "square") {
-        var rect = new Rectangle(this.canvas,this.gl,res.color,res.selectedColor, res.points);
-        rect.id = res.id;
+        var rect = new Rectangle(this.canvas,this.gl,element.color,element.selectedColor, element.points);
+        rect.id = element.id;
         arr.push(rect)
       }
       else if (element.type === "polygon") {
-        var poly = new Polygon(this.canvas,this.gl,res.color,res.selectedColor,res.points);
-        poly.id = res.id;
+        var poly = new Polygon(this.canvas,this.gl,element.color,element.selectedColor,element.points);
+        poly.id = element.id;
         arr.push(poly)
       }
     });
     this.shapeList = arr;
+    this.render();
   }
 }
 

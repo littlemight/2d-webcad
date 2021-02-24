@@ -87,7 +87,7 @@ saveBtn.onclick = () => {
 }
 
 loadBtn.onclick = () => {
-  var files = fileSelector.files;
+  var files = fileSelector.files as FileList;
   var fr = new FileReader();
   fr.readAsText(files.item(0));
   fr.onload = (e) => {
