@@ -133,9 +133,13 @@ class Rectangle extends Shape {
                     this.points[0].pos[0] + delta * dif1,
                     this.points[0].pos[1] + delta * dif2,
                 ],
-                null,
+                this.points[1].id,
                 2
             );
+            this.updateLastPoint([
+                this.points[0].pos[0] + delta * dif1,
+                this.points[0].pos[1] + delta * dif2,
+            ])
             this.addRectPoint(
                 [this.points[0].pos[0], this.points[0].pos[1] + delta * dif2],
                 null,
