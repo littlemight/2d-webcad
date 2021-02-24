@@ -218,6 +218,12 @@ export function elementChooser(index: number) {
     "<li>Klik lagi tombol Color untuk menonaktifkan fitur merubah warna</li>" +
     "</ul>" +
     "</p>",
+    "<p>Menghapus objek:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pilih objek yang ingin dihapus</li>" +
+    "<li>Tekan tombol delete atau backspace pada keyboard, objek akan terhapus</li>" +
+    "</ul>" +
+    "</p>",
     "<p>Menyimpan data:" +
     "<ul class='list-inside list-decimal'>" +
     "<li>Klik tombol Save pada header</li>" +
