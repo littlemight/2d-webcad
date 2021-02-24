@@ -5,10 +5,6 @@ import {elementChooser} from "./utils/utils"
 const canvas = document.getElementById("gl-display") as HTMLCanvasElement;
 const gl = canvas.getContext("webgl2") as WebGL2RenderingContext;
 
-function redzome() {
-  console.log("Yeh");
-}
-
 if (!gl) {
   alert("Your browser does not support WebGL");
 }
