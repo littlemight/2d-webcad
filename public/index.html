@@ -31,11 +31,9 @@
       <div class="px-3" style="border-width: 2; border-color: black">
         <p>Mouse: <span id="mouse-pos"></span></p>
         <p>Canvas: <span id="canvas-pos"></span></p>
-        <div class="flex justify-center mt-3">
-          <canvas id="gl-display" width="1000" height="1000"></canvas>
-        </div>
-        <div class="w-full">
-          <div>
+        <div class="flex justify-between mt-3">
+          <canvas id="gl-display" width="1000" height="1000" class="border-2 border-black"></canvas>
+          <div clas="text-left">
             <h2 class="text-2xl">Manual</h2>
             <select name="manual" id="select-manual">
               <option disabled selected>Pilih Manual</option>
@@ -48,10 +46,11 @@
               <option value="6">Menyimpan data</option>
               <option value="7">Me-load data</option>
             </select>
-          </div>
-          <div id="text-manual"></div>
+            <div id="text-manual">Pilih salah satu opsi yang tersedia untuk melihat manual melakukan task tersebut</div>
+          </div> 
         </div>
       </div>
+
       <div class="text-center p-6 text-base">All rights reserved</div>
     </div>
     <script src="../src/index.ts" defer></script>
