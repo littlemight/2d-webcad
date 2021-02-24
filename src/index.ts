@@ -1,8 +1,13 @@
 import Application from "./classes/Application";
 import Polygon from "./classes/Polygon";
+import {elementChooser} from "./utils/utils"
 
 const canvas = document.getElementById("gl-display") as HTMLCanvasElement;
 const gl = canvas.getContext("webgl2") as WebGL2RenderingContext;
+
+function redzome() {
+  console.log("Yeh");
+}
 
 if (!gl) {
   alert("Your browser does not support WebGL");
@@ -39,6 +44,8 @@ const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
 const colorBtn = document.getElementById("colorBtn") as HTMLButtonElement;
 const loadBtn = document.getElementById("loadBtn") as HTMLButtonElement;
 const fileSelector = document.getElementById("fileSelect") as HTMLInputElement;
+const manualSelector = document.getElementById("select-manual") as HTMLInputElement;
+const manualArea = document.getElementById("text-manual") as HTMLElement; 
 
 const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, colorBtn];
 // const btns = [selectBtn, lineBtn, squareBtn, polygonBtn, saveBtn];
@@ -99,6 +106,12 @@ colorBtn.onclick = () => {
     colorBtn.innerText = "Color";
   }
 };
+
+manualSelector.onchange = () => {
+  console.log(manualSelector.value);
+  manualArea.innerHTML = "";
+  manualArea.innerHTML = elementChooser(parseInt(manualSelector.value));
+}
 
 document.onkeyup = (e) => {
   switch (e.key) {

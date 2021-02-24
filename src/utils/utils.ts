@@ -142,3 +142,38 @@ export function bulkProgramSetup(
     depBuf
   );
 }
+
+export function elementChooser(index: number) {
+  const manual = [
+    "<p>Membuat garis:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pastikan tombol Line pada header sudah terpilih, bila belum silahkan klik tombol Line</li>" +
+    "<li>Arahkan mouse ke titik awal pembuatan garis</li>" +
+    "<li>Klik kiri mouse</li>" +
+    "<li>Arahkan mouse ke titik akhir garis</li>" +
+    "<li>Klik kiri mouse, garis sudah terbentuk</li>" +
+    "</ul>" +
+    "</p>",
+    "<p>Membuat persegi:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pastikan tombol Rectangle pada header sudah terpilih, klik tombol Rectangle bila belum</li>" +
+    "<li>Arahkan mouse ke titik awal pembuatan persegi</li>" +
+    "<li>Klik kiri mouse</li>" +
+    "<li>Arahkan mouse ke titik sebrang dari persegi yang akan dibuat</li>" +
+    "<li>Klik kiri mouse, persegi sudah terbentuk</li>" +
+    "</ul>" +
+    "</p>",
+    "<p>Membuat poligon:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pastikan tombol Polygon pada header sudah terpilih, klik tombol Polygon bila belum</li>" +
+    "<li>Arahkan mouse ke titik awal pembuatan poligon</li>" +
+    "<li>Klik kiri mouse</li>" +
+    "<li>Gerakkan cursor ke lokasi titik berikutnya dari poligon yang ingin dibentuk</li>" +
+    "<li>Klik kiri mouse</li>" +
+    "<li>Ulangi langkah 4 dan 5 hingga poligon sudah dibuat</li>" +
+    "<li>tekan tombol escape pada keyboard untuk mengakhiri pembuatan poligon</li>" +
+    "</ul>" +
+    "</p>"
+  ];
+  return manual[index];
+}

@@ -19,7 +19,7 @@
         <button id="polygonBtn" class="btn btn-blue">Polygon</button>
         <!-- <button id="saveBtn" class="btn btn-blue">Save</button> -->
         <a id="saveBtn" class="btn btn-blue cursor-pointer">Save</a>
-        <input type="file" id="fileSelect" class="">
+        <input type="file" id="fileSelect" class="" />
         <button id="loadBtn" class="btn btn-blue">Load</button>
         <!-- pas di click, ubah mode ke color, semua warna dibawah di apply ke SelectedShape -->
         <button id="colorBtn" class="btn btn-blue">Color</button>
@@ -32,12 +32,22 @@
         <p>Mouse: <span id="mouse-pos"></span></p>
         <p>Canvas: <span id="canvas-pos"></span></p>
         <div class="flex justify-center mt-3">
-          <canvas id="gl-display" width="1200" height="1200"></canvas>
+          <canvas id="gl-display" width="1000" height="1000"></canvas>
+        </div>
+        <div class="w-full">
+          <div>
+            <h2 class="text-2xl">Manual</h2>
+            <select name="manual" id="select-manual">
+              <option disabled selected>Pilih Manual</option>
+              <option value="0">Membuat Garis</option>
+              <option value="1">Membuat Persegi</option>
+              <option value="2">Membuat Poligon</option>
+            </select>
+          </div>
+          <div id="text-manual"></div>
         </div>
       </div>
-      <div class="text-center p-6 text-base">
-        All rights reserved
-      </div>
+      <div class="text-center p-6 text-base">All rights reserved</div>
     </div>
     <script src="../src/index.ts" defer></script>
   </body>
