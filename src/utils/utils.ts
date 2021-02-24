@@ -149,31 +149,69 @@ export function elementChooser(index: number) {
     "<ul class='list-inside list-decimal'>" +
     "<li>Pastikan tombol Line pada header sudah terpilih, bila belum silahkan klik tombol Line</li>" +
     "<li>Arahkan mouse ke titik awal pembuatan garis</li>" +
-    "<li>Klik kiri mouse</li>" +
+    "<li>Klik kiri pada mouse</li>" +
     "<li>Arahkan mouse ke titik akhir garis</li>" +
-    "<li>Klik kiri mouse, garis sudah terbentuk</li>" +
+    "<li>Klik kiri pada mouse, garis sudah terbentuk</li>" +
     "</ul>" +
     "</p>",
     "<p>Membuat persegi:" +
     "<ul class='list-inside list-decimal'>" +
     "<li>Pastikan tombol Rectangle pada header sudah terpilih, klik tombol Rectangle bila belum</li>" +
     "<li>Arahkan mouse ke titik awal pembuatan persegi</li>" +
-    "<li>Klik kiri mouse</li>" +
+    "<li>Klik kiri pada mouse</li>" +
     "<li>Arahkan mouse ke titik sebrang dari persegi yang akan dibuat</li>" +
-    "<li>Klik kiri mouse, persegi sudah terbentuk</li>" +
+    "<li>Klik kiri pada mouse, persegi sudah terbentuk</li>" +
     "</ul>" +
     "</p>",
     "<p>Membuat poligon:" +
     "<ul class='list-inside list-decimal'>" +
     "<li>Pastikan tombol Polygon pada header sudah terpilih, klik tombol Polygon bila belum</li>" +
     "<li>Arahkan mouse ke titik awal pembuatan poligon</li>" +
-    "<li>Klik kiri mouse</li>" +
+    "<li>Klik kiri pada mouse</li>" +
     "<li>Gerakkan cursor ke lokasi titik berikutnya dari poligon yang ingin dibentuk</li>" +
-    "<li>Klik kiri mouse</li>" +
+    "<li>Klik kiri pada mouse</li>" +
     "<li>Ulangi langkah 4 dan 5 hingga poligon sudah dibuat</li>" +
     "<li>tekan tombol escape pada keyboard untuk mengakhiri pembuatan poligon</li>" +
     "</ul>" +
-    "</p>"
+    "</p>",
+    "<p>Memilih Objek:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pastikan tombol Select pada header sudah terpilih, klik tombol Select bila belum</li>" +
+    "<li>Arahkan cursor pada objek yang ingin dipilih</li>" +
+    "<li>Klik kiri pada mouse, objek sudah terpilih</li>" +
+    "</ul>" +
+    "</p>",
+    "<p>Memindahkan Objek:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pastikan tombol Select pada header sudah terpilih, klik tombol Select bila belum</li>" +
+    "<li>Pilih objek yang ingin digerakkan</li>" +
+    "<li>Klik kiri pada objek yang dipilih, tahan, lalu geser kursor ke arah lokasi yang diinginkan</li>" +
+    "<li>Lepas klik kiri pada mouse</li>" +
+    "</ul>" +
+    "</p>",
+    "<p>Mengubah warna:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pilih objek yang ingin dirubah warnanya</li>" +
+    "<li>Tentukan warna baru dari objek serta dari border objek menggunakan color picker yang berada di header</li>" +
+    "<li>Klik tombol Color pada header</li>" +
+    "<li>Klik lagi tombol Color untuk menonaktifkan fitur merubah warna</li>" +
+    "</ul>" +
+    "</p>",
+    "<p>Menyimpan data:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Klik tombol Save pada header</li>" +
+    "<li>Data objek akan tersimpan di dalam file yang diunduh</li>" +
+    "</ul>" +
+    "</p>",
+    "<p>Me-load data:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Klik tombol Choose File pada header</li>" +
+    "<li>Pilih file berisi data objek yang akan di-load. Pastikan file memiliki ekstensi .json</li>" +
+    "<li>Setelah memilih, klik tombol Load pada header</li>" +
+    "<li>Data akan di-load dan objek akan ditampilkan pada canvas</li>" +
+    "</ul>" +
+    "</p>",
+    
   ];
   return manual[index];
 }
