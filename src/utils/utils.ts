@@ -184,6 +184,24 @@ export function elementChooser(index: number) {
     "<li>Klik kiri pada mouse, objek sudah terpilih</li>" +
     "</ul>" +
     "</p>",
+    "<p>Mengubah Ukuran Persegi:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pilih persegi yang ingin diperbesar</li>" +
+    "<li>Arahkan kursor ke persegi kecil yang berada di sudut kiri atas persegi</li>" +
+    "<li>Ketika kursor telah berada di atas persegi kecil, klik kiri pada mouse, tahan, lalu pindahkan kursor menjauhi titik tengah persegi untuk memperbesar atau mendekati titik tengah persegi untuk memperkecil</li>" +
+    "<li>Bila persegi malah menjadi tidak terpilih, pilih lagi persegi lalu lakukan langkah 2 dan 3 pada sudut kanan atas persegi</li>" +
+    "<li>Setelah ukuran persegi sesuai dengan yang diinginkan, lepas klik kiri pada mouse</li>" +
+    "</ul>" +
+    "</p>",
+    "<p>Memindahkan Simpul:" +
+    "<ul class='list-inside list-decimal'>" +
+    "<li>Pilih objek non-persegi yang simpulnya ingin dipindahkan</li>" +
+    "<li>Arahkan kursor ke persegi kecil yang berada di simpul yang ingin digerakkan</li>" +
+    "<li>Ketika kursor telah berada di atas persegi kecil, klik kiri pada mouse, tahan, lalu pindahkan kursor menuju lokasi simpul yang baru</li>" +
+    "</ul>" +
+    "Apabila simpul yang ingin dipindahkan merupakan milik sebuah poligon, perlu diperhatikan bahwa lokasi simpul yang baru harus tetap menjaga " +
+    "bentuk poligon tetap convex" +
+    "</p>",
     "<p>Memindahkan Objek:" +
     "<ul class='list-inside list-decimal'>" +
     "<li>Pastikan tombol Select pada header sudah terpilih, klik tombol Select bila belum</li>" +
