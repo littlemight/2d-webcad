@@ -3,6 +3,7 @@ import {
   rgbaToId,
   hexaToRGBA,
   bulkProgramSetup,
+  setInitId,
 } from "../utils/utils";
 import Polygon from "./Polygon";
 import Rectangle from "./Rectangle";
@@ -26,6 +27,7 @@ class Application {
   mousePosBef: Point = [0, 0];
   mousePressed: boolean = false;
   drawingShape: Shape | null = null;
+  
 
   constructor(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
     this.canvas = canvas;
@@ -225,6 +227,7 @@ class Application {
     ) {
       this.drawingShape.addPoint(this.mousePos);
       this.drawingShape.addPoint(this.mousePos);
+      console.log(this.drawingShape.toSaveData());
       this.shapeList.push(this.drawingShape);
       this.selected = {
         id: this.drawingShape?.id,
@@ -298,6 +301,10 @@ class Application {
     });
     this.shapeList = arr;
     this.render();
+
+    var idArr = this.shapeList.map((v) => v.id)
+    var sortedArr = idArr.sort((a,b) => b-a);
+    setInitId(sortedArr[0]);
   }
 }
 

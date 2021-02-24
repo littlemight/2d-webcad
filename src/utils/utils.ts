@@ -1,5 +1,8 @@
-let _id = 1;
+let _id = 1
 
+export function setInitId(maxim: number) : void{
+  _id = maxim + 1;
+}
 export function createId() {
   return _id++;
 }
