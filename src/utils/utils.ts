@@ -150,47 +150,47 @@ export function elementChooser(index: number) {
   const manual = [
     "<p>Membuat garis:" +
     "<ul class='list-inside list-decimal'>" +
-    "<li>Pastikan tombol Line pada header sudah terpilih, bila belum silahkan klik tombol Line</li>" +
-    "<li>Arahkan mouse ke titik awal pembuatan garis</li>" +
-    "<li>Klik kiri pada mouse</li>" +
-    "<li>Arahkan mouse ke titik akhir garis</li>" +
-    "<li>Klik kiri pada mouse, garis sudah terbentuk</li>" +
+    "<li>Pastikan tombol Line pada header sudah terpilih, bila belum silahkan klik tombol Line.</li>" +
+    "<li>Arahkan mouse ke titik awal pembuatan garis.</li>" +
+    "<li>Klik kiri pada mouse.</li>" +
+    "<li>Arahkan mouse ke titik akhir garis.</li>" +
+    "<li>Klik kiri pada mouse, garis sudah terbentuk.</li>" +
     "</ul>" +
     "</p>",
     "<p>Membuat persegi:" +
     "<ul class='list-inside list-decimal'>" +
-    "<li>Pastikan tombol Rectangle pada header sudah terpilih, klik tombol Rectangle bila belum</li>" +
-    "<li>Arahkan mouse ke titik awal pembuatan persegi</li>" +
-    "<li>Klik kiri pada mouse</li>" +
-    "<li>Arahkan mouse ke titik sebrang dari persegi yang akan dibuat</li>" +
-    "<li>Klik kiri pada mouse, persegi sudah terbentuk</li>" +
+    "<li>Pastikan tombol Rectangle pada header sudah terpilih, klik tombol Rectangle bila belum.</li>" +
+    "<li>Arahkan mouse ke titik awal pembuatan persegi.</li>" +
+    "<li>Klik kiri pada mouse.</li>" +
+    "<li>Arahkan mouse ke titik sebrang dari persegi yang akan dibuat.</li>" +
+    "<li>Klik kiri pada mouse, persegi sudah terbentuk.</li>" +
     "</ul>" +
     "</p>",
     "<p>Membuat poligon:" +
     "<ul class='list-inside list-decimal'>" +
-    "<li>Pastikan tombol Polygon pada header sudah terpilih, klik tombol Polygon bila belum</li>" +
-    "<li>Arahkan mouse ke titik awal pembuatan poligon</li>" +
-    "<li>Klik kiri pada mouse</li>" +
-    "<li>Gerakkan cursor ke lokasi titik berikutnya dari poligon yang ingin dibentuk</li>" +
-    "<li>Klik kiri pada mouse</li>" +
-    "<li>Ulangi langkah 4 dan 5 hingga poligon sudah dibuat</li>" +
-    "<li>tekan tombol escape pada keyboard untuk mengakhiri pembuatan poligon</li>" +
+    "<li>Pastikan tombol Polygon pada header sudah terpilih, klik tombol Polygon bila belum.</li>" +
+    "<li>Arahkan mouse ke titik awal pembuatan poligon.</li>" +
+    "<li>Klik kiri pada mouse.</li>" +
+    "<li>Gerakkan cursor ke lokasi titik berikutnya dari poligon yang ingin dibentuk.</li>" +
+    "<li>Klik kiri pada mouse.</li>" +
+    "<li>Ulangi langkah 4 dan 5 hingga poligon sudah dibuat.</li>" +
+    "<li>tekan tombol escape pada keyboard untuk mengakhiri pembuatan poligon.</li>" +
     "</ul>" +
     "</p>",
     "<p>Memilih Objek:" +
     "<ul class='list-inside list-decimal'>" +
-    "<li>Pastikan tombol Select pada header sudah terpilih, klik tombol Select bila belum</li>" +
-    "<li>Arahkan cursor pada objek yang ingin dipilih</li>" +
-    "<li>Klik kiri pada mouse, objek sudah terpilih</li>" +
+    "<li>Pastikan tombol Select pada header sudah terpilih, klik tombol Select bila belum.</li>" +
+    "<li>Arahkan cursor pada objek yang ingin dipilih.</li>" +
+    "<li>Klik kiri pada mouse, objek sudah terpilih.</li>" +
     "</ul>" +
     "</p>",
     "<p>Mengubah Ukuran Persegi:" +
     "<ul class='list-inside list-decimal'>" +
-    "<li>Pilih persegi yang ingin diperbesar</li>" +
-    "<li>Arahkan kursor ke persegi kecil yang berada di sudut kiri atas persegi</li>" +
-    "<li>Ketika kursor telah berada di atas persegi kecil, klik kiri pada mouse, tahan, lalu pindahkan kursor menjauhi titik tengah persegi untuk memperbesar atau mendekati titik tengah persegi untuk memperkecil</li>" +
-    "<li>Bila persegi malah menjadi tidak terpilih, pilih lagi persegi lalu lakukan langkah 2 dan 3 pada sudut kanan atas persegi</li>" +
-    "<li>Setelah ukuran persegi sesuai dengan yang diinginkan, lepas klik kiri pada mouse</li>" +
+    "<li>Pilih persegi yang ingin diperbesar.</li>" +
+    "<li>Arahkan kursor ke persegi kecil yang berada di sudut kiri atas persegi.</li>" +
+    "<li>Ketika kursor telah berada di atas persegi kecil, klik kiri pada mouse, tahan, lalu pindahkan kursor menjauhi titik tengah persegi untuk memperbesar atau mendekati titik tengah persegi untuk memperkecil.</li>" +
+    "<li>Bila persegi malah menjadi tidak terpilih, pilih lagi persegi lalu lakukan langkah 2 dan 3 pada sudut kanan atas persegi.</li>" +
+    "<li>Setelah ukuran persegi sesuai dengan yang diinginkan, lepas klik kiri pada mouse.</li>" +
     "</ul>" +
     "</p>",
     "<p>Memindahkan Simpul:" +
@@ -228,8 +228,9 @@ export function elementChooser(index: number) {
     "<ul class='list-inside list-decimal'>" +
     "<li>Klik tombol Save pada header</li>" +
     "<li>Data objek akan tersimpan di dalam file berbentuk .json yang siap diunduh.</li>" +
-    "<li>Akan muncul prompt untuk memilih akan disimpan di folder mana, lalu ganti nama file jika ingin mengganti (default: data.json).</li>" +
+    "<li>Akan muncul prompt untuk memilih akan disimpan di folder mana, lalu ganti nama file jika ingin mengganti.</li>" +
     "<li>Lalu, klik Save.</li>" +
+    "<li>Bila tidak muncul prompt pada langkah 3 dan 4, secara default file akan disimpan dengan nama 'data.json'</li>" +
     "</ul>" +
     "</p>",
     "<p>Me-load data:" +
