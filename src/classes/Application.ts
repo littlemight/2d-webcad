@@ -27,7 +27,6 @@ class Application {
   mousePosBef: Point = [0, 0];
   mousePressed: boolean = false;
   drawingShape: Shape | null = null;
-  
 
   constructor(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
     this.canvas = canvas;
@@ -264,52 +263,76 @@ class Application {
     }
   }
 
-  save(el:any) {
+  save(el: any) {
     let str = "" as string;
     let arr = [] as any;
-    this.shapeList.forEach(element => {
+    this.shapeList.forEach((element) => {
       arr.push(element.toSaveData());
     });
     str = JSON.stringify(arr);
     console.log(JSON.parse(str));
     var data = "text/json;charset=utf-8," + encodeURIComponent(str);
-    el.setAttribute("href", "data:"+data);
-    el.setAttribute("download", "data.json");  
+    el.setAttribute("href", "data:" + data);
+    el.setAttribute("download", "data.json");
   }
 
-  load(res:any)  {
+  load(
+    res: {
+      type: ShapeType;
+      id: number;
+      color: Color;
+      selectedColor: Color;
+      points: { id: number; pos: Point }[];
+    }[]
+  ) {
     let arr: Shape[] = [];
     console.log(res);
-    res.forEach(element => {
+    res.forEach((element) => {
       console.log(element);
 
       if (element.type === "line") {
-        var line = new Line(this.canvas,this.gl,element.color,element.selectedColor,element.points);
+        var line = new Line(
+          this.canvas,
+          this.gl,
+          element.color,
+          element.selectedColor,
+          element.points
+        );
         line.id = element.id;
-        arr.push(line)
-      }
-      else if (element.type === "square") {
-        var rect = new Rectangle(this.canvas,this.gl,element.color,element.selectedColor, element.points);
+        arr.push(line);
+      } else if (element.type === "square") {
+        var rect = new Rectangle(
+          this.canvas,
+          this.gl,
+          element.color,
+          element.selectedColor,
+          element.points
+        );
         rect.id = element.id;
-        arr.push(rect)
-      }
-      else if (element.type === "polygon") {
-        var poly = new Polygon(this.canvas,this.gl,element.color,element.selectedColor,element.points);
+        arr.push(rect);
+      } else if (element.type === "polygon") {
+        var poly = new Polygon(
+          this.canvas,
+          this.gl,
+          element.color,
+          element.selectedColor,
+          element.points
+        );
         poly.id = element.id;
-        arr.push(poly)
+        arr.push(poly);
       }
     });
     this.shapeList = arr;
     this.render();
 
-    var idArr = this.shapeList.map((v) => v.id)
-    var sortedArr = idArr.sort((a,b) => b-a);
+    var idArr = this.shapeList.map((v) => v.id);
+    var sortedArr = idArr.sort((a, b) => b - a);
     var maxIDShape = this.shapeList.findIndex((shape) => {
       return shape.id === sortedArr[0];
     });
     var finalMax = this.shapeList[maxIDShape].points
       .map((v) => v.id)
-      .sort((a,b) => b-a)[0];
+      .sort((a, b) => b - a)[0];
     setInitId(finalMax);
   }
 }
